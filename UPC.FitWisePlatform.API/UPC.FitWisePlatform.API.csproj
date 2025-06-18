@@ -25,7 +25,6 @@
       <Folder Include="Publishing\" />
       <Folder Include="Reviewing\" />
       <Folder Include="Selling\" />
-      <Folder Include="Shared\Infrastructure\" />
     </ItemGroup>
 
 </Project>
