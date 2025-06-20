@@ -27,7 +27,7 @@ public partial class HealthPlan
         this.Duration = new Duration();
         this.Description = string.Empty;
         this.CreatorId = 0;
-        this.Meals = new List<Meal>(); // Inicializar la colección
+        this.Meals = new List<Meal>();
         this.Exercises = new List<Exercise>();
     }
 
@@ -40,7 +40,7 @@ public partial class HealthPlan
         this.Duration = new Duration(value, unit);
         this.Description = description;
         this.CreatorId = creatorId;
-        this.Meals = new List<Meal>(); // Inicializar la colección
+        this.Meals = new List<Meal>();
         this.Exercises = new List<Exercise>();
     }
 
@@ -54,5 +54,14 @@ public partial class HealthPlan
         this.CreatorId = command.CreatorId;
         this.Meals = new List<Meal>();
         this.Exercises = new List<Exercise>();
+    }
+
+    public void UpdateHealthPlan(UpdateHealthPlanCommand command)
+    {
+        this.Name = command.Name;
+        this.Objective = command.Objective;
+        this.Price = new Price(command.PriceAmount, command.PriceCurrency);
+        this.Duration = new Duration(command.DurationValue, command.DurationUnit);
+        this.Description = command.Description;
     }
 }

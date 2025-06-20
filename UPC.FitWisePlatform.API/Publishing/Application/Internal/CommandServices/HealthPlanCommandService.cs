@@ -18,4 +18,27 @@ public class HealthPlanCommandService(IHealthPlanRepository healthPlanRepository
         await unitOfWork.CompleteAsync();
         return healthPlan;
     }
+
+    public async Task<HealthPlan?> Handle(UpdateHealthPlanCommand command)
+    {
+        var healthPlan = await healthPlanRepository.FindByIdAsync(command.HealthPlanId);
+        if (healthPlan == null)
+            throw new Exception($"HealthPlan with id '{command.HealthPlanId}' does not exist");
+        if (command.Name != healthPlan.Name && await healthPlanRepository.ExistsByNameAsync(command.Name))
+            throw new Exception($"HealthPlan with the name -> '{command.Name}' already exists");
+        healthPlan.UpdateHealthPlan(command);
+        healthPlanRepository.Update(healthPlan);
+        await unitOfWork.CompleteAsync();
+        return healthPlan;
+    }
+
+    public async Task<bool> Handle(DeleteHealthPlanCommand command)
+    {
+        var healthPlan = await healthPlanRepository.FindByIdAsync(command.HealthPlanId);
+        if (healthPlan == null)
+            throw new Exception($"HealthPlan with id '{command.HealthPlanId}' does not exist");
+        healthPlanRepository.Remove(healthPlan);
+        await unitOfWork.CompleteAsync();
+        return true;
+    }
 }
