@@ -1,4 +1,5 @@
-﻿using UPC.FitWisePlatform.API.Publishing.Domain.Model.ValueObjects;
+﻿using UPC.FitWisePlatform.API.Publishing.Domain.Model.Commands;
+using UPC.FitWisePlatform.API.Publishing.Domain.Model.ValueObjects;
 
 namespace UPC.FitWisePlatform.API.Publishing.Domain.Model.Aggregate;
 
@@ -40,6 +41,18 @@ public partial class HealthPlan
         this.Description = description;
         this.CreatorId = creatorId;
         this.Meals = new List<Meal>(); // Inicializar la colección
+        this.Exercises = new List<Exercise>();
+    }
+
+    public HealthPlan(CreateHealthPlanCommand command)
+    {
+        this.Name = command.Name;
+        this.Objective = command.Objective;
+        this.Price = new Price(command.PriceAmount, command.PriceCurrency);
+        this.Duration = new Duration(command.DurationValue, command.DurationUnit);
+        this.Description = command.Description;
+        this.CreatorId = command.CreatorId;
+        this.Meals = new List<Meal>();
         this.Exercises = new List<Exercise>();
     }
 }
