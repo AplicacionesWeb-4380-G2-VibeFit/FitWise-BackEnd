@@ -66,4 +66,37 @@ public class HealthPlanController
         var healthPlanResource = HealthPlanResourceFromEntityAssembler.ToResourceFromEntity(healthPlan);
         return CreatedAtAction(nameof(GetHealthPlanById), new { healthPlanId = healthPlanResource.Id }, healthPlanResource);
     }
+
+    [HttpPut("{healthPlanId:int}")]
+    [SwaggerOperation(
+        Summary = "Update health plan by Id and UpdateResource",
+        Description = "Retrieves the updated health plan that is available in the FitWise Platform.",
+        OperationId = "UpdateHealthPlan")
+    ]
+    [SwaggerResponse(StatusCodes.Status200OK, "Returns the updated health plan", typeof(HealthPlanResource))]
+    public async Task<IActionResult> UpdateHealthPlan(int healthPlanId, [FromBody] UpdateHealthPlanResource resource)
+    {
+        var updatedHealthPlanCommand =
+            UpdateHealthPlanCommandFromResourceAssembler.ToCommandFromResource(healthPlanId, resource);
+        var healthPlan = await healthPlanCommandService.Handle(updatedHealthPlanCommand);
+        if (healthPlan is null) return NotFound();
+        var healthPlanResource = HealthPlanResourceFromEntityAssembler.ToResourceFromEntity(healthPlan);
+        return Ok(healthPlanResource);    
+    }
+    
+    [HttpDelete("{healthPlanId:int}")]
+    [SwaggerOperation(
+        Summary = "Delete health plan by Id",
+        Description = "Deletes a health plan from the FitWise Platform.",
+        OperationId = "DeleteHealthPlanById")
+    ]
+    [SwaggerResponse(StatusCodes.Status200OK, "The health plan was successfully deleted")]
+    [SwaggerResponse(StatusCodes.Status404NotFound, "The health plan was not found")]
+    public async Task<IActionResult> DeleteHealthPlan(int healthPlanId)
+    {
+        var deletedHealthPlanCommand = DeleteHealthPlanCommandFromResourceAssembler.ToCommandFromResource(healthPlanId);
+        var result = await healthPlanCommandService.Handle(deletedHealthPlanCommand);
+        if (!result) return NotFound();
+        return Ok($"Health plan with ID {healthPlanId} was deleted successfully.");
+    }
 }
