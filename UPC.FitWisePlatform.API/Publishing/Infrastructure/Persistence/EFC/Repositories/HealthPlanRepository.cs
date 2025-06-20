@@ -30,4 +30,14 @@ public class HealthPlanRepository(AppDbContext context) :
     {
         return await Context.Set<HealthPlan>().ToListAsync();
     }
+
+    public new void Update(HealthPlan entity)
+    {
+        Context.Set<HealthPlan>().Update(entity);
+    }
+
+    public new void Remove(HealthPlan entity)
+    {
+        Context.Set<HealthPlan>().Remove(entity);
+    }
 }
