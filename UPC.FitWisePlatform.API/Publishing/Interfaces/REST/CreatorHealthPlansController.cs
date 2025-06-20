@@ -4,8 +4,9 @@ using Swashbuckle.AspNetCore.Annotations;
 using UPC.FitWisePlatform.API.Publishing.Domain.Model.Queries;
 using UPC.FitWisePlatform.API.Publishing.Domain.Services;
 using UPC.FitWisePlatform.API.Publishing.Interfaces.REST.Resources;
+using UPC.FitWisePlatform.API.Publishing.Interfaces.REST.Transform;
 
-namespace UPC.FitWisePlatform.API.Publishing.Interfaces.REST.Transform;
+namespace UPC.FitWisePlatform.API.Publishing.Interfaces.REST;
 
 [ApiController]
 [Route("api/v1/creator/{creatorId:int}/healthPlans")]
