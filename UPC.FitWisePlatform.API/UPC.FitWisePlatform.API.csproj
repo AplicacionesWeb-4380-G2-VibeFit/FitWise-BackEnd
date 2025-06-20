@@ -37,7 +37,6 @@
       <Folder Include="Reviewing\Application\Internal\CommandServices\" />
       <Folder Include="Reviewing\Application\Internal\QueryServices\" />
       <Folder Include="Reviewing\Domain\Model\ValueObjects\" />
-      <Folder Include="Reviewing\Domain\Services\" />
       <Folder Include="Reviewing\Infrastructure\Persistence\EFC\Repositories\" />
       <Folder Include="Reviewing\Interfaces\REST\Resources\" />
       <Folder Include="Reviewing\Interfaces\REST\Transform\" />
