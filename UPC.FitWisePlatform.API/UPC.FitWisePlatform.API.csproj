@@ -36,7 +36,6 @@
       <Folder Include="Publishing\Interfaces\REST\Transform\" />
       <Folder Include="Reviewing\Application\Internal\CommandServices\" />
       <Folder Include="Reviewing\Application\Internal\QueryServices\" />
-      <Folder Include="Reviewing\Domain\Model\Commands\" />
       <Folder Include="Reviewing\Domain\Model\Queries\" />
       <Folder Include="Reviewing\Domain\Model\ValueObjects\" />
       <Folder Include="Reviewing\Domain\Services\" />
