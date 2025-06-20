@@ -1,8 +1,17 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using UPC.FitWisePlatform.API.Publishing.Application.Internal.CommandServices;
+using UPC.FitWisePlatform.API.Publishing.Application.Internal.QueryServices;
+using UPC.FitWisePlatform.API.Publishing.Domain.Repositories;
+using UPC.FitWisePlatform.API.Publishing.Domain.Services;
+using UPC.FitWisePlatform.API.Publishing.Infrastructure.Persistence.EFC.Repositories;
 using UPC.FitWisePlatform.API.Shared.Domain.Repositories;
 using UPC.FitWisePlatform.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using UPC.FitWisePlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using UPC.FitWisePlatform.API.Shared.Infrastructure.Persistence.EFC.Repositories;
+using Cortex.Mediator.Behaviors;
+using Cortex.Mediator.Commands;
+using Cortex.Mediator.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +22,6 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 // Configure Kebab Case Route Naming Convention
 builder.Services.AddControllers(options => options.Conventions.Add(new KebabCaseRouteNamingConvention()));
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnet/core/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => options.EnableAnnotations());
 
 // Add Database Connection
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -44,13 +49,53 @@ else  if (builder.Environment.IsProduction())
             .EnableDetailedErrors();
     }); 
  
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnet/core/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1",
+        new OpenApiInfo
+        {
+            Title = "UPC.FitWise.Platform.API",
+            Version = "v1",
+            Description = "UPC FitWise Platform API",
+            TermsOfService = new Uri("htpps://acme-learning.com/tos"),
+            Contact = new OpenApiContact
+            {
+                Name = "UPC Studios",
+                Email = "contact@upc.com"
+            },
+            License = new OpenApiLicense
+            {
+                Name = "Apache 2.0",
+                Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0.html")
+            }
+        });
+});
+
 // Configure Dependency Injection
  
 // Shared Bounded Context Injection Configuration
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-// ************* Bounded Context Injection Configuration
+// ************* Publishing Bounded Context Injection Configuration
+builder.Services.AddScoped<IHealthPlanRepository, HealthPlanRepository>();
+builder.Services.AddScoped<IHealthPlanCommandService, HealthPlanCommandService>();
+builder.Services.AddScoped<IHealthPlanQueryService, HealthPlanQueryService>();
 
+// Mediator Configuration
+
+// Add Mediator Injection Configuration
+builder.Services.AddScoped(typeof(ICommandPipelineBehavior<>), typeof(LoggingCommandBehavior<>));
+
+// Add Cortex Mediator for Event Handling
+builder.Services.AddCortexMediator(
+    configuration: builder.Configuration,
+    handlerAssemblyMarkerTypes: new[] { typeof(Program) }, configure: options =>
+    {
+        options.AddOpenCommandPipelineBehavior(typeof(LoggingCommandBehavior<>));
+    });
+ 
 
 var app = builder.Build();
 
@@ -74,4 +119,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
