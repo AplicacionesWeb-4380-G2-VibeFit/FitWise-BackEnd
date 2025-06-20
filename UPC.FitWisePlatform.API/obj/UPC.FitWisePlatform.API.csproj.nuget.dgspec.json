@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "F:\\RiderProjects\\fitwise-platform\\UPC.FitWisePlatform.API\\UPC.FitWisePlatform.API.csproj": {}
+    "D:\\developmentRider\\FitWise-BackEnd\\UPC.FitWisePlatform.API\\UPC.FitWisePlatform.API.csproj": {}
   },
   "projects": {
-    "F:\\RiderProjects\\fitwise-platform\\UPC.FitWisePlatform.API\\UPC.FitWisePlatform.API.csproj": {
+    "D:\\developmentRider\\FitWise-BackEnd\\UPC.FitWisePlatform.API\\UPC.FitWisePlatform.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\RiderProjects\\fitwise-platform\\UPC.FitWisePlatform.API\\UPC.FitWisePlatform.API.csproj",
+        "projectUniqueName": "D:\\developmentRider\\FitWise-BackEnd\\UPC.FitWisePlatform.API\\UPC.FitWisePlatform.API.csproj",
         "projectName": "UPC.FitWisePlatform.API",
-        "projectPath": "F:\\RiderProjects\\fitwise-platform\\UPC.FitWisePlatform.API\\UPC.FitWisePlatform.API.csproj",
-        "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
-        "outputPath": "F:\\RiderProjects\\fitwise-platform\\UPC.FitWisePlatform.API\\obj\\",
+        "projectPath": "D:\\developmentRider\\FitWise-BackEnd\\UPC.FitWisePlatform.API\\UPC.FitWisePlatform.API.csproj",
+        "packagesPath": "C:\\Users\\Ramiro Guzman\\.nuget\\packages\\",
+        "outputPath": "D:\\developmentRider\\FitWise-BackEnd\\UPC.FitWisePlatform.API\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Ramiro Guzman\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -104,7 +110,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\USUARIO\\.dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
