@@ -116,3 +116,8 @@ F:\RiderProjects\fitwise-platform\UPC.FitWisePlatform.API\obj\Debug\net9.0\refin
 F:\RiderProjects\fitwise-platform\UPC.FitWisePlatform.API\obj\Debug\net9.0\UPC.FitWisePlatform.API.pdb
 F:\RiderProjects\fitwise-platform\UPC.FitWisePlatform.API\obj\Debug\net9.0\UPC.FitWisePlatform.API.genruntimeconfig.cache
 F:\RiderProjects\fitwise-platform\UPC.FitWisePlatform.API\obj\Debug\net9.0\ref\UPC.FitWisePlatform.API.dll
+F:\RiderProjects\fitwise-platform\UPC.FitWisePlatform.API\bin\Debug\net9.0\Cortex.Mediator.dll
+F:\RiderProjects\fitwise-platform\UPC.FitWisePlatform.API\bin\Debug\net9.0\FluentValidation.dll
+F:\RiderProjects\fitwise-platform\UPC.FitWisePlatform.API\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
+F:\RiderProjects\fitwise-platform\UPC.FitWisePlatform.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyModel.dll
+F:\RiderProjects\fitwise-platform\UPC.FitWisePlatform.API\bin\Debug\net9.0\Scrutor.dll
