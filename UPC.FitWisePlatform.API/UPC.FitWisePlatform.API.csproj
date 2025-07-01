@@ -23,6 +23,8 @@
     <ItemGroup>
       <Folder Include="Organizing\" />
       <Folder Include="Presenting\" />
+      <Folder Include="Publishing\Application\Internal\CommandServices\" />
+      <Folder Include="Publishing\Application\Internal\QueryServices\" />
       <Folder Include="Publishing\Infrastructure\Persistence\EFC\Repositories\" />
       <Folder Include="Reviewing\" />
       <Folder Include="Selling\" />
