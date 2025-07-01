@@ -23,6 +23,7 @@
     <ItemGroup>
       <Folder Include="Organizing\" />
       <Folder Include="Presenting\" />
+      <Folder Include="Publishing\Domain\Model\ValueObjects\" />
       <Folder Include="Reviewing\" />
       <Folder Include="Selling\" />
     </ItemGroup>
