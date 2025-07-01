@@ -20,8 +20,4 @@
         <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="9.0.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Publishing\Interfaces\REST\Transform\" />
-    </ItemGroup>
-
 </Project>
