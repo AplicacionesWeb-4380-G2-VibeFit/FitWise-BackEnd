@@ -1,67 +1,59 @@
-﻿using UPC.FitWisePlatform.API.Publishing.Domain.Model.Commands;
-using UPC.FitWisePlatform.API.Publishing.Domain.Model.ValueObjects;
+﻿using UPC.FitWisePlatform.API.Publishing.Domain.Model.ValueObjects;
 
 namespace UPC.FitWisePlatform.API.Publishing.Domain.Model.Aggregate;
 
 public partial class HealthPlan
 {
     public int Id { get; }
-    public string Name { get; private set; }
+    public string PlanName { get; private set; }
     public string Objective { get; private set; }
-    public Price Price { get; private set; } // Value Object
-    public Duration Duration { get; private set; } // Value Object
+    public Duration Duration { get; private set; } 
+    public Price Price { get; private set; }
     public string Description { get; private set; }
-    public int CreatorId { get; private set; } // Foreign Key to Creator (can be null)
+    public int ProfileId { get; private set; }
     
-    // Colección de Meals para esta HealthPlan
-    public ICollection<Meal> Meals { get; }
-    
-    // Colección de Exercises para esta HealthPlan
-    public ICollection<Exercise> Exercises { get; }
+    public ICollection<HealthPlanMeal> HealthPlanMeals { get; private set; } = new List<HealthPlanMeal>();
+    public ICollection<HealthPlanExercise> HealthPlanExercises { get; private set; } = new List<HealthPlanExercise>();
 
-    public HealthPlan()
-    {
-        this.Name = string.Empty;
-        this.Objective = string.Empty;
-        this.Price = new Price();
-        this.Duration = new Duration();
-        this.Description = string.Empty;
-        this.CreatorId = 0;
-        this.Meals = new List<Meal>();
-        this.Exercises = new List<Exercise>();
-    }
+    public HealthPlan() { }
 
-    public HealthPlan(string name, string objective, int amount, string currency, int value, string unit,
-        string description, int creatorId)
+    public HealthPlan(
+        string planName, 
+        string objective, 
+        Duration duration, 
+        Price price, 
+        string description,
+        int profileId)
     {
-        this.Name = name;
+        if (string.IsNullOrWhiteSpace(planName))
+            throw new ArgumentNullException(nameof(planName), "HealthPlan name cannot be null or empty.");
+        if (string.IsNullOrWhiteSpace(objective))
+            throw new ArgumentNullException(nameof(objective), "HealthPlan objective cannot be null or empty.");
+        if (string.IsNullOrWhiteSpace(description))
+            throw new ArgumentNullException(nameof(description), "HealthPlan description cannot be null or empty.");
+        
+        this.PlanName = planName;
         this.Objective = objective;
-        this.Price = new Price(amount, currency);
-        this.Duration = new Duration(value, unit);
+        this.Duration = duration;
+        this.Price = price;
         this.Description = description;
-        this.CreatorId = creatorId;
-        this.Meals = new List<Meal>();
-        this.Exercises = new List<Exercise>();
+        this.ProfileId = profileId;
     }
 
-    public HealthPlan(CreateHealthPlanCommand command)
+    public void UpdateDetails(string newPlanName, string newObjective, Duration newDuration, Price newPrice,
+        string newDescription)
     {
-        this.Name = command.Name;
-        this.Objective = command.Objective;
-        this.Price = new Price(command.PriceAmount, command.PriceCurrency);
-        this.Duration = new Duration(command.DurationValue, command.DurationUnit);
-        this.Description = command.Description;
-        this.CreatorId = command.CreatorId;
-        this.Meals = new List<Meal>();
-        this.Exercises = new List<Exercise>();
-    }
-
-    public void UpdateHealthPlan(UpdateHealthPlanCommand command)
-    {
-        this.Name = command.Name;
-        this.Objective = command.Objective;
-        this.Price = new Price(command.PriceAmount, command.PriceCurrency);
-        this.Duration = new Duration(command.DurationValue, command.DurationUnit);
-        this.Description = command.Description;
+        if (string.IsNullOrWhiteSpace(newPlanName))
+            throw new ArgumentNullException(nameof(newPlanName), "HealthPlan new name cannot be null or empty.");
+        if (string.IsNullOrWhiteSpace(newObjective))
+            throw new ArgumentNullException(nameof(newObjective), "HealthPlan new objective cannot be null or empty.");
+        if (string.IsNullOrWhiteSpace(newDescription))
+            throw new ArgumentNullException(nameof(newDescription), "HealthPlan new description cannot be null or empty.");
+        
+        PlanName = newPlanName;
+        Description = newDescription;
+        Objective = newObjective;
+        Duration = newDuration;
+        Price = newPrice;
     }
 }

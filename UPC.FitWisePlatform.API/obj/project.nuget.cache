@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DaVi6kP40Oc=",
+  "dgSpecHash": "1M2H89hiF8Q=",
   "success": true,
-  "projectFilePath": "F:\\RiderProjects\\fitwise-platform\\UPC.FitWisePlatform.API\\UPC.FitWisePlatform.API.csproj",
+  "projectFilePath": "F:\\RiderProjects\\FitWise-BackEnd\\UPC.FitWisePlatform.API\\UPC.FitWisePlatform.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USUARIO\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",
     "C:\\Users\\USUARIO\\.nuget\\packages\\cortex.mediator\\1.6.1\\cortex.mediator.1.6.1.nupkg.sha512",

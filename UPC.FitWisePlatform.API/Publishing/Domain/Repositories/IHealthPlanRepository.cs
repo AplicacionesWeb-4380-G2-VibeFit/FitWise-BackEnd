@@ -5,7 +5,6 @@ namespace UPC.FitWisePlatform.API.Publishing.Domain.Repositories;
 
 public interface IHealthPlanRepository : IBaseRepository<HealthPlan>
 {
-    Task<IEnumerable<HealthPlan>> FindByCreatorIdAsync(int creatorId);
-    
-    Task<bool> ExistsByNameAsync(string name);
+    Task<IEnumerable<HealthPlan>> FindByProfileId(int profileId);
+    Task<bool> ExistsByPlanNameAsync(string planName);
 }

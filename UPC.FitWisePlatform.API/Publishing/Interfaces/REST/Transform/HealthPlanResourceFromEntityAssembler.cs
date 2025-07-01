@@ -7,15 +7,20 @@ public static class HealthPlanResourceFromEntityAssembler
 {
     public static HealthPlanResource ToResourceFromEntity(HealthPlan entity)
     {
+        if (entity == null)
+        {
+            throw new ArgumentNullException(nameof(entity), "Cannot convert a null HealthPlan entity to a HealthPlanResource.");
+        }
+
         return new HealthPlanResource(
             entity.Id,
-            entity.Name,
+            entity.PlanName,
+            entity.Objective,
+            entity.Duration.DurationValue,
+            entity.Duration.DurationType.ToString(),
+            entity.Price.PriceValue,
+            entity.Price.Currency.ToString(),
             entity.Description,
-            entity.Price.Amount,
-            entity.Price.Currency,
-            entity.Duration.Value,
-            entity.Duration.Unit,
-            entity.Description,
-            entity.CreatorId);
+            entity.ProfileId);
     }
 }

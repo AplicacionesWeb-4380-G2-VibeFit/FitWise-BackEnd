@@ -20,11 +20,4 @@
         <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="9.0.1" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Organizing\" />
-      <Folder Include="Presenting\" />
-      <Folder Include="Reviewing\" />
-      <Folder Include="Selling\" />
-    </ItemGroup>
-
 </Project>
