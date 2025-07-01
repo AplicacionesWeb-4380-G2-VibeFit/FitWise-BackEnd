@@ -24,7 +24,6 @@
       <Folder Include="Organizing\" />
       <Folder Include="Presenting\" />
       <Folder Include="Publishing\Domain\Model\Aggregate\" />
-      <Folder Include="Publishing\Domain\Model\Entities\" />
       <Folder Include="Reviewing\" />
       <Folder Include="Selling\" />
     </ItemGroup>
