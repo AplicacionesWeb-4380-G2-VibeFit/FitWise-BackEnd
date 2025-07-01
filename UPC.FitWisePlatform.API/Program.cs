@@ -1,10 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using UPC.FitWisePlatform.API.Publishing.Application.Internal.CommandServices;
-using UPC.FitWisePlatform.API.Publishing.Application.Internal.QueryServices;
-using UPC.FitWisePlatform.API.Publishing.Domain.Repositories;
-using UPC.FitWisePlatform.API.Publishing.Domain.Services;
-using UPC.FitWisePlatform.API.Publishing.Infrastructure.Persistence.EFC.Repositories;
 using UPC.FitWisePlatform.API.Shared.Domain.Repositories;
 using UPC.FitWisePlatform.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using UPC.FitWisePlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
@@ -79,9 +74,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // ************* Publishing Bounded Context Injection Configuration
-builder.Services.AddScoped<IHealthPlanRepository, HealthPlanRepository>();
-builder.Services.AddScoped<IHealthPlanCommandService, HealthPlanCommandService>();
-builder.Services.AddScoped<IHealthPlanQueryService, HealthPlanQueryService>();
+
 
 // Mediator Configuration
 
