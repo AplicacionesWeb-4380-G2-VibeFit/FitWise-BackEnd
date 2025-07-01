@@ -1,4 +1,6 @@
-﻿namespace UPC.FitWisePlatform.API.Publishing.Domain.Model.Entities;
+﻿using UPC.FitWisePlatform.API.Publishing.Domain.Model.Aggregate;
+
+namespace UPC.FitWisePlatform.API.Publishing.Domain.Model.Entities;
 
 public partial class Exercise
 {
