@@ -20,4 +20,20 @@
         <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="9.0.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Reviewing\Application\Internal\CommandServices\" />
+      <Folder Include="Reviewing\Application\Internal\QueryServices\" />
+      <Folder Include="Reviewing\Domain\Model\Aggregate\" />
+      <Folder Include="Reviewing\Domain\Model\Commands\" />
+      <Folder Include="Reviewing\Domain\Model\Entities\" />
+      <Folder Include="Reviewing\Domain\Model\Queries\" />
+      <Folder Include="Reviewing\Domain\Model\ValueObjects\" />
+      <Folder Include="Reviewing\Domain\Repositories\" />
+      <Folder Include="Reviewing\Domain\Services\" />
+      <Folder Include="Reviewing\Infrastructure\Persistence\EFC\Configuration\Extensions\" />
+      <Folder Include="Reviewing\Infrastructure\Persistence\EFC\Repositories\" />
+      <Folder Include="Reviewing\Interfaces\REST\Resources\" />
+      <Folder Include="Reviewing\Interfaces\REST\Transform\" />
+    </ItemGroup>
+
 </Project>
