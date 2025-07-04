@@ -1,3 +1,3 @@
 ﻿namespace UPC.FitWisePlatform.API.Reviewing.Domain.Model.Commands;
 
-public record CreateReviewReportCommand(int ReviewId, string UserId, string Reason);
+public record CreateReviewReportCommand(int ReviewId, int UserId, string Reason);
