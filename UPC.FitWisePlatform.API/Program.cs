@@ -23,6 +23,13 @@ using UPC.FitWisePlatform.API.Reviewing.Domain.Repositories;
 using UPC.FitWisePlatform.API.Reviewing.Domain.Services;
 using UPC.FitWisePlatform.API.Reviewing.Infrastructure.Persistence.EFC.Repositories;
 
+// Organizing
+using UPC.FitWisePlatform.API.Organizing.Application.Internal.CommandServices;
+using UPC.FitWisePlatform.API.Organizing.Application.Internal.QueryServices;
+using UPC.FitWisePlatform.API.Organizing.Domain.Repositories;
+using UPC.FitWisePlatform.API.Organizing.Domain.Services;
+using UPC.FitWisePlatform.API.Organizing.Infrastructure.Persistence.EFC.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Lower Case URLs
@@ -145,6 +152,14 @@ builder.Services.AddCortexMediator(
     {
         options.AddOpenCommandPipelineBehavior(typeof(LoggingCommandBehavior<>));
     });
+
+// ************* Organizing Bounded Context Injection Configuration *************
+// Repositories
+builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+// Command Services
+builder.Services.AddScoped<IScheduleCommandService, ScheduleCommandService>();
+// Query Services
+builder.Services.AddScoped<IScheduleQueryService, ScheduleQueryService>();
 
 var app = builder.Build();
 
