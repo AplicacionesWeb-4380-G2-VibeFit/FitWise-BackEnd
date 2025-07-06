@@ -22,6 +22,10 @@ using UPC.FitWisePlatform.API.Reviewing.Application.Internal.QueryServices;
 using UPC.FitWisePlatform.API.Reviewing.Domain.Repositories;
 using UPC.FitWisePlatform.API.Reviewing.Domain.Services;
 using UPC.FitWisePlatform.API.Reviewing.Infrastructure.Persistence.EFC.Repositories;
+using UPC.FitWisePlatform.API.Selling.Application.Internal.CommandServices;
+using UPC.FitWisePlatform.API.Selling.Application.Internal.QueryServices;
+using UPC.FitWisePlatform.API.Selling.Domain.Repositories;
+using UPC.FitWisePlatform.API.Selling.Infrastructure.Persistence.EFC.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -118,6 +122,23 @@ builder.Services.AddScoped<IHealthPlanExerciseQueryService, HealthPlanExerciseQu
 builder.Services.AddScoped<IHealthPlanMealRepository, HealthPlanMealRepository>();
 builder.Services.AddScoped<IHealthPlanMealCommandService, HealthPlanMealCommandService>();
 builder.Services.AddScoped<IHealthPlanMealQueryService, HealthPlanMealQueryService>();
+
+
+//SELLING
+
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IPurchasedPlanRepository, PurchasedPlanRepository>();
+builder.Services.AddScoped<IPurchaseHistoryRepository, PurchaseHistoryRepository>();
+
+// Command Services
+builder.Services.AddScoped<PaymentCommandService>();
+builder.Services.AddScoped<PurchasedPlanCommandService>();
+builder.Services.AddScoped<PurchaseHistoryCommandService>();
+
+// Query Services
+builder.Services.AddScoped<PaymentQueryService>();
+builder.Services.AddScoped<PurchasedPlanQueryService>();
+builder.Services.AddScoped<PurchaseHistoryQueryService>();
 
 // ************* Reviewing Bounded Context Injection Configuration *************
 

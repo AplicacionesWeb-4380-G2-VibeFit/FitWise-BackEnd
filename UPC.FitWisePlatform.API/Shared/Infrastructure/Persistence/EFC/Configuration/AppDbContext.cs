@@ -4,6 +4,7 @@ using UPC.FitWisePlatform.API.Publishing.Domain.Model.Aggregate;
 using UPC.FitWisePlatform.API.Publishing.Domain.Model.Entities;
 using UPC.FitWisePlatform.API.Publishing.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using UPC.FitWisePlatform.API.Reviewing.Infrastructure.Persistence.EFC.Configuration.Extensions;
+using UPC.FitWisePlatform.API.Selling.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using UPC.FitWisePlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 
 namespace UPC.FitWisePlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
@@ -27,5 +28,10 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         
         // Reviewing Context Configuration
         builder.ApplyReviewingConfiguration();
+        
+        // SELLING
+        builder.ApplySellingConfiguration();
+
+        builder.UseSnakeCaseNamingConvention();
     }
 }
