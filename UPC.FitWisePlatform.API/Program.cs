@@ -182,7 +182,9 @@ builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 builder.Services.AddScoped<IScheduleCommandService, ScheduleCommandService>();
 // Query Services
 builder.Services.AddScoped<IScheduleQueryService, ScheduleQueryService>();
+var app = builder.Build();
 
+// DB initialization
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
