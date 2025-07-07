@@ -1,7 +1,3 @@
 ﻿namespace UPC.FitWisePlatform.API.Publishing.Domain.Model.Commands;
 
-public record CreateExerciseCommand(
-    int HealthPlanId,
-    string Name,
-    string Description,
-    string Image);
+public record CreateExerciseCommand(string Name, string Description, Uri ImageUri);

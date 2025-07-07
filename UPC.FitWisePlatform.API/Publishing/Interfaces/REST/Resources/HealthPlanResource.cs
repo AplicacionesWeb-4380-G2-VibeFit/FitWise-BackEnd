@@ -2,11 +2,11 @@
 
 public record HealthPlanResource(
     int Id,
-    string Name, 
-    string Objective, 
-    decimal PriceAmount, 
-    string PriceCurrency,
+    string PlanName,
+    string Objective,
     int DurationValue,
-    string DurationUnit,
+    string DurationType,
+    decimal PriceValue,
+    string Currency,
     string Description,
-    int CreatorId);
+    int ProfileId);

@@ -1,105 +1,190 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using UPC.FitWisePlatform.API.Shared.Domain.Repositories;
+using UPC.FitWisePlatform.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
+using UPC.FitWisePlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
+using UPC.FitWisePlatform.API.Shared.Infrastructure.Persistence.EFC.Repositories;
+
+using Cortex.Mediator.Behaviors;
+using Cortex.Mediator.Commands;
+using Cortex.Mediator.DependencyInjection;
+
+// Publishing
 using UPC.FitWisePlatform.API.Publishing.Application.Internal.CommandServices;
 using UPC.FitWisePlatform.API.Publishing.Application.Internal.QueryServices;
 using UPC.FitWisePlatform.API.Publishing.Domain.Repositories;
 using UPC.FitWisePlatform.API.Publishing.Domain.Services;
 using UPC.FitWisePlatform.API.Publishing.Infrastructure.Persistence.EFC.Repositories;
-using UPC.FitWisePlatform.API.Shared.Domain.Repositories;
-using UPC.FitWisePlatform.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
-using UPC.FitWisePlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
-using UPC.FitWisePlatform.API.Shared.Infrastructure.Persistence.EFC.Repositories;
-using Cortex.Mediator.Behaviors;
-using Cortex.Mediator.Commands;
-using Cortex.Mediator.DependencyInjection;
+
+// Reviewing
+using UPC.FitWisePlatform.API.Reviewing.Application.Internal.CommandServices;
+using UPC.FitWisePlatform.API.Reviewing.Application.Internal.QueryServices;
+using UPC.FitWisePlatform.API.Reviewing.Domain.Repositories;
+using UPC.FitWisePlatform.API.Reviewing.Domain.Services;
+using UPC.FitWisePlatform.API.Reviewing.Infrastructure.Persistence.EFC.Repositories;
+using UPC.FitWisePlatform.API.Selling.Application.Internal.CommandServices;
+using UPC.FitWisePlatform.API.Selling.Application.Internal.QueryServices;
+using UPC.FitWisePlatform.API.Selling.Domain.Repositories;
+using UPC.FitWisePlatform.API.Selling.Infrastructure.Persistence.EFC.Repositories;
+
+// Organizing
+using UPC.FitWisePlatform.API.Organizing.Application.Internal.CommandServices;
+using UPC.FitWisePlatform.API.Organizing.Application.Internal.QueryServices;
+using UPC.FitWisePlatform.API.Organizing.Domain.Repositories;
+using UPC.FitWisePlatform.API.Organizing.Domain.Services;
+using UPC.FitWisePlatform.API.Organizing.Infrastructure.Persistence.EFC.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 // Configure Lower Case URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
-// Configure Kebab Case Route Naming Convention
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+// Kebab-case route naming
 builder.Services.AddControllers(options => options.Conventions.Add(new KebabCaseRouteNamingConvention()));
 
-// Add Database Connection
+// DB connection
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Verify if the connection string is not null or empty
 if (string.IsNullOrEmpty(connectionString))
 {
     throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
 }
 
-// Configure Database Context and Logging Level
 if (builder.Environment.IsDevelopment())
+{
     builder.Services.AddDbContext<AppDbContext>(options =>
     {
         options.UseMySQL(connectionString)
-            .LogTo(Console.WriteLine, LogLevel.Information)
-            .EnableSensitiveDataLogging()
-            .EnableDetailedErrors();
+               .LogTo(Console.WriteLine, LogLevel.Information)
+               .EnableSensitiveDataLogging()
+               .EnableDetailedErrors();
     });
-else  if (builder.Environment.IsProduction())
+}
+else if (builder.Environment.IsProduction())
+{
     builder.Services.AddDbContext<AppDbContext>(options =>
     {
         options.UseMySQL(connectionString)
-            .LogTo(Console.WriteLine, LogLevel.Error)
-            .EnableDetailedErrors();
-    }); 
- 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnet/core/swashbuckle
+               .LogTo(Console.WriteLine, LogLevel.Error)
+               .EnableDetailedErrors();
+    });
+}
+
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1",
-        new OpenApiInfo
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "ACME.LearningCenter.Platform.API",
+        Version = "v1",
+        Description = "ACME LearningCenter Platform API",
+        TermsOfService = new Uri("https://acme-learning.com/tos"),
+        Contact = new OpenApiContact
         {
-            Title = "UPC.FitWise.Platform.API",
-            Version = "v1",
-            Description = "UPC FitWise Platform API",
-            TermsOfService = new Uri("htpps://acme-learning.com/tos"),
-            Contact = new OpenApiContact
-            {
-                Name = "UPC Studios",
-                Email = "contact@upc.com"
-            },
-            License = new OpenApiLicense
-            {
-                Name = "Apache 2.0",
-                Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0.html")
-            }
-        });
+            Name = "ACME Studios",
+            Email = "contact@acme.com"
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Apache 2.0",
+            Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0.html")
+        }
+    });
 });
 
-// Configure Dependency Injection
- 
-// Shared Bounded Context Injection Configuration
+// Dependency Injection
+
+// Shared
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-// ************* Publishing Bounded Context Injection Configuration
+// Publishing
 builder.Services.AddScoped<IHealthPlanRepository, HealthPlanRepository>();
 builder.Services.AddScoped<IHealthPlanCommandService, HealthPlanCommandService>();
 builder.Services.AddScoped<IHealthPlanQueryService, HealthPlanQueryService>();
 
-// Mediator Configuration
+builder.Services.AddScoped<IMealRepository, MealRepository>();
+builder.Services.AddScoped<IMealCommandService, MealCommandService>();
+builder.Services.AddScoped<IMealQueryService, MealQueryService>();
 
-// Add Mediator Injection Configuration
+builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
+builder.Services.AddScoped<IExerciseCommandService, ExerciseCommandService>();
+builder.Services.AddScoped<IExerciseQueryService, ExerciseQueryService>();
+
+builder.Services.AddScoped<IHealthPlanExerciseRepository, HealthPlanExerciseRepository>();
+builder.Services.AddScoped<IHealthPlanExerciseCommandService, HealthPlanExerciseCommandService>();
+builder.Services.AddScoped<IHealthPlanExerciseQueryService, HealthPlanExerciseQueryService>();
+
+builder.Services.AddScoped<IHealthPlanMealRepository, HealthPlanMealRepository>();
+builder.Services.AddScoped<IHealthPlanMealCommandService, HealthPlanMealCommandService>();
+builder.Services.AddScoped<IHealthPlanMealQueryService, HealthPlanMealQueryService>();
+
+
+//SELLING
+
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IPurchasedPlanRepository, PurchasedPlanRepository>();
+builder.Services.AddScoped<IPurchaseHistoryRepository, PurchaseHistoryRepository>();
+
+// Command Services
+builder.Services.AddScoped<PaymentCommandService>();
+builder.Services.AddScoped<PurchasedPlanCommandService>();
+builder.Services.AddScoped<PurchaseHistoryCommandService>();
+
+// Query Services
+builder.Services.AddScoped<PaymentQueryService>();
+builder.Services.AddScoped<PurchasedPlanQueryService>();
+builder.Services.AddScoped<PurchaseHistoryQueryService>();
+
+// ************* Reviewing Bounded Context Injection Configuration *************
+
+// Repositories
+builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+builder.Services.AddScoped<IReviewCommentRepository, ReviewCommentRepository>();
+builder.Services.AddScoped<IReviewReportRepository, ReviewReportRepository>();
+
+// Command Services
+builder.Services.AddScoped<IReviewCommandService, ReviewCommandService>();
+builder.Services.AddScoped<IReviewCommentCommandService, ReviewCommentCommandService>();
+builder.Services.AddScoped<IReviewReportCommandService, ReviewReportCommandService>();
+
+// Query Services
+builder.Services.AddScoped<IReviewQueryService, ReviewQueryService>();
+builder.Services.AddScoped<IReviewCommentQueryService, ReviewCommentQueryService>();
+builder.Services.AddScoped<IReviewReportQueryService, ReviewReportQueryService>();
+
+// Mediator
 builder.Services.AddScoped(typeof(ICommandPipelineBehavior<>), typeof(LoggingCommandBehavior<>));
-
-// Add Cortex Mediator for Event Handling
 builder.Services.AddCortexMediator(
     configuration: builder.Configuration,
-    handlerAssemblyMarkerTypes: new[] { typeof(Program) }, configure: options =>
+    handlerAssemblyMarkerTypes: new[] { typeof(Program) },
+    configure: options =>
     {
         options.AddOpenCommandPipelineBehavior(typeof(LoggingCommandBehavior<>));
     });
- 
+
+// ************* Organizing Bounded Context Injection Configuration *************
+// Repositories
+builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
+// Command Services
+builder.Services.AddScoped<IScheduleCommandService, ScheduleCommandService>();
+// Query Services
+builder.Services.AddScoped<IScheduleQueryService, ScheduleQueryService>();
 
 var app = builder.Build();
 
-// Verify if the database is created and apply migrations
+// DB initialization
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -107,15 +192,11 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated();
 }
 
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//  app.MapOpenApi();
-//}
+// Middleware
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseCors("PermitirFrontend");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();

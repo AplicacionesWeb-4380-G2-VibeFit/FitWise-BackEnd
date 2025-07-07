@@ -1,11 +1,6 @@
-﻿namespace UPC.FitWisePlatform.API.Publishing.Domain.Model.Commands;
+﻿using UPC.FitWisePlatform.API.Publishing.Domain.Model.ValueObjects;
 
-public record UpdateHealthPlanCommand(
-    int HealthPlanId,
-    string Name, 
-    string Objective, 
-    decimal PriceAmount, 
-    string PriceCurrency,
-    int DurationValue,
-    string DurationUnit,
+namespace UPC.FitWisePlatform.API.Publishing.Domain.Model.Commands;
+
+public record UpdateHealthPlanCommand(int Id, string PlanName, string Objective, Duration Duration, Price Price, 
     string Description);

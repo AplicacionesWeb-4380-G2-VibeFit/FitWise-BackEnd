@@ -1,11 +1,6 @@
-﻿namespace UPC.FitWisePlatform.API.Publishing.Domain.Model.Commands;
+﻿using UPC.FitWisePlatform.API.Publishing.Domain.Model.ValueObjects;
 
-public record CreateHealthPlanCommand(
-    string Name, 
-    string Objective, 
-    decimal PriceAmount, 
-    string PriceCurrency,
-    int DurationValue,
-    string DurationUnit,
-    string Description,
-    int CreatorId);
+namespace UPC.FitWisePlatform.API.Publishing.Domain.Model.Commands;
+
+public record CreateHealthPlanCommand(string PlanName, string Objective, Duration Duration, Price Price, 
+    string Description, int ProfileId);

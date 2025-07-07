@@ -1,10 +1,4 @@
 ﻿namespace UPC.FitWisePlatform.API.Publishing.Interfaces.REST.Resources;
 
-public record UpdateHealthPlanResource(
-    string Name, 
-    string Objective, 
-    decimal PriceAmount, 
-    string PriceCurrency,
-    int DurationValue,
-    string DurationUnit,
-    string Description);
+public record UpdateHealthPlanResource(string PlanName, string Objective, int DurationValue, string DurationType, 
+    decimal PriceValue, string Currency, string Description);

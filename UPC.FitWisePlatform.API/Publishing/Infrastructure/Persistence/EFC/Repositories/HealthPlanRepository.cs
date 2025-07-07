@@ -6,38 +6,16 @@ using UPC.FitWisePlatform.API.Shared.Infrastructure.Persistence.EFC.Repositories
 
 namespace UPC.FitWisePlatform.API.Publishing.Infrastructure.Persistence.EFC.Repositories;
 
-public class HealthPlanRepository(AppDbContext context) : 
+public class HealthPlanRepository(AppDbContext context) :
     BaseRepository<HealthPlan>(context), IHealthPlanRepository
 {
-    public async Task<IEnumerable<HealthPlan>> FindByCreatorIdAsync(int creatorId)
+    public async Task<IEnumerable<HealthPlan>> FindByProfileId(int profileId)
     {
-        return await Context.Set<HealthPlan>()
-            .Where(healthPlan => healthPlan.CreatorId == creatorId)
-            .ToListAsync();
+        return await Context.Set<HealthPlan>().Where(p => p.ProfileId == profileId).ToListAsync();
     }
 
-    public async Task<bool> ExistsByNameAsync(string name)
+    public async Task<bool> ExistsByPlanNameAsync(string planName)
     {
-        return await Context.Set<HealthPlan>().AnyAsync(healthPlan => healthPlan.Name == name);
-    }
-
-    public new async Task<HealthPlan?> FindByIdAsync(int id)
-    {
-        return await Context.Set<HealthPlan>().FirstOrDefaultAsync(healthPlan => healthPlan.Id == id);
-    }
-
-    public new async Task<IEnumerable<HealthPlan>> ListAsync()
-    {
-        return await Context.Set<HealthPlan>().ToListAsync();
-    }
-
-    public new void Update(HealthPlan entity)
-    {
-        Context.Set<HealthPlan>().Update(entity);
-    }
-
-    public new void Remove(HealthPlan entity)
-    {
-        Context.Set<HealthPlan>().Remove(entity);
+        return await Context.Set<HealthPlan>().AnyAsync(hp => hp.PlanName == planName);
     }
 }

@@ -5,9 +5,7 @@ namespace UPC.FitWisePlatform.API.Publishing.Domain.Services;
 
 public interface IHealthPlanQueryService
 {
-    Task<IEnumerable<HealthPlan>> Handle(GetAllHealthPlansQuery query);
-
     Task<HealthPlan?> Handle(GetHealthPlanByIdQuery query);
-    
-    Task<IEnumerable<HealthPlan>> Handle(GetHealthPlansByCreatorIdQuery query);
+    Task<IEnumerable<HealthPlan>> Handle(GetAllHealthPlansQuery query);
+    Task<IEnumerable<HealthPlan>> Handle(GetHealthPlansByProfileIdQuery query);
 }
