@@ -38,6 +38,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Configure Lower Case URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
+builder.WebHost.UseUrls("http://0.0.0.0:8080");
 
 // CORS
 builder.Services.AddCors(options =>
@@ -182,15 +183,22 @@ builder.Services.AddScoped<IScheduleCommandService, ScheduleCommandService>();
 // Query Services
 builder.Services.AddScoped<IScheduleQueryService, ScheduleQueryService>();
 
-var app = builder.Build();
-
-// DB initialization
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<AppDbContext>();
-    context.Database.EnsureCreated();
+    var logger = services.GetRequiredService<ILogger<Program>>();
+
+    try
+    {
+        var context = services.GetRequiredService<AppDbContext>();
+        context.Database.EnsureCreated();
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Error al intentar conectar con la base de datos.");
+    }
 }
+
 
 // Middleware
 app.UseSwagger();
