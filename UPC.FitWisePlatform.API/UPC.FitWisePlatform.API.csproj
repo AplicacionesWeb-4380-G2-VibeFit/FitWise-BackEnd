@@ -22,6 +22,9 @@
 
     <ItemGroup>
       <Folder Include="Reviewing\Domain\Model\ValueObjects\" />
+      <Folder Include="Selling\Domain\Model\Aggregate\" />
+      <Folder Include="Selling\Interfaces\REST\Resources\" />
+      <Folder Include="Selling\Interfaces\REST\Transform\" />
     </ItemGroup>
 
 </Project>
