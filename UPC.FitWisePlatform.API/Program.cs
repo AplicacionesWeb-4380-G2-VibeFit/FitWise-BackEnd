@@ -34,6 +34,14 @@ using UPC.FitWisePlatform.API.Organizing.Domain.Repositories;
 using UPC.FitWisePlatform.API.Organizing.Domain.Services;
 using UPC.FitWisePlatform.API.Organizing.Infrastructure.Persistence.EFC.Repositories;
 
+// Presenting
+using UPC.FitWisePlatform.API.Presenting.Application.Internal.CommandServices;
+using UPC.FitWisePlatform.API.Presenting.Application.Internal.QueryServices;
+using UPC.FitWisePlatform.API.Presenting.Domain.Repositories;
+using UPC.FitWisePlatform.API.Presenting.Domain.Services;
+using UPC.FitWisePlatform.API.Presenting.Infrastructure.Persistence.EFC.Repositories;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Lower Case URLs
@@ -182,6 +190,23 @@ builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 builder.Services.AddScoped<IScheduleCommandService, ScheduleCommandService>();
 // Query Services
 builder.Services.AddScoped<IScheduleQueryService, ScheduleQueryService>();
+
+// ************* Presenting Bounded Context Injection Configuration *************
+
+// Repositories
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IFollowerRepository, FollowerRepository>();
+builder.Services.AddScoped<ICertificateRepository, CertificateRepository>();
+// Command Services
+builder.Services.AddScoped<IUserCommandService, UserCommandService>();
+builder.Services.AddScoped<IFollowerCommandService, FollowerCommandService>();
+builder.Services.AddScoped<ICertificateCommandService, CertificateCommandService>();
+// Query Services
+builder.Services.AddScoped<IUserQueryService, UserQueryService>();
+builder.Services.AddScoped<IFollowerQueryService, FollowerQueryService>();
+builder.Services.AddScoped<ICertificateQueryService, CertificateQueryService>();
+
+
 var app = builder.Build();
 
 // DB initialization

@@ -1,6 +1,7 @@
 ﻿using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
 using UPC.FitWisePlatform.API.Organizing.Infrastructure.Persistence.EFC.Configuration.Extensions;
+using UPC.FitWisePlatform.API.Presenting.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using UPC.FitWisePlatform.API.Publishing.Domain.Model.Aggregate;
 using UPC.FitWisePlatform.API.Publishing.Domain.Model.Entities;
 using UPC.FitWisePlatform.API.Publishing.Infrastructure.Persistence.EFC.Configuration.Extensions;
@@ -36,6 +37,9 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
 
       // Organizing Context Configuration
       builder.ApplyScheduleConfiguration();
+      
+      // Presenting Context Configuration
+      builder.ApplyPresentingConfiguration();
   }
   
 }
