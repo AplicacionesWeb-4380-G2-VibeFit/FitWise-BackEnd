@@ -15,18 +15,18 @@ public class UserCommandService(
         if (await userRepository.ExistsByEmailAsync(command.Email))
             throw new Exception("User with the same email already exists");
         
-        if (await userRepository.ExistsByUsernameAsync(command.Username))
-            throw new Exception("User with the same username already exists");
+        if (await userRepository.ExistsByProfileIdAsync(command.ProfileId))
+            throw new Exception("User with the same profileId already exists");
+        
         var user = new User(
             command.FirstName, 
             command.LastName,
             command.Email, 
             command.BirthDate, 
             command.Gender, 
-            command.Username,
-            command.Password,
             command.Image,
-            command.AboutMe);
+            command.AboutMe,
+            command.ProfileId);
         
         await userRepository.AddAsync(user);
         await unitOfWork.CompleteAsync();
@@ -41,8 +41,7 @@ public class UserCommandService(
         
         if (user == null)
             throw new Exception($"User with id '{command.Id}' does not exist");
-        if(command.Username != user.Username && await userRepository.ExistsByUsernameAsync(command.Username))
-            throw new Exception("User with the same username already exists");
+        
         if(command.Email.EmailValue != user.Email.EmailValue && await userRepository.ExistsByEmailAsync(command.Email))
             throw new Exception("User with the same email already exists");
         
@@ -52,10 +51,9 @@ public class UserCommandService(
             command.Email, 
             command.BirthDate, 
             command.Gender,
-            command.Username,
-            command.Password,
             command.Image,
             command.AboutMe);
+        
         userRepository.Update(user);
         await unitOfWork.CompleteAsync();
         

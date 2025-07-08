@@ -8,7 +8,5 @@ public record UpdateUserResource(
     string Email,
     string BirthDate,
     string Gender,
-    string Username,
-    string Password,
     string Image,
     string AboutMe);

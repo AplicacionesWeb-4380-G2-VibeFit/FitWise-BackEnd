@@ -9,7 +9,5 @@ public record UpdateUserCommand(
     Email Email,
     BirthDate BirthDate,
     Gender Gender,
-    string Username,
-    string Password,
     Image Image,
     string AboutMe);

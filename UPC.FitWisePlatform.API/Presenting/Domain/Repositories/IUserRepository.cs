@@ -6,7 +6,7 @@ namespace UPC.FitWisePlatform.API.Presenting.Domain.Repositories;
 
 public interface IUserRepository : IBaseRepository<User>
 {
-    Task<bool> ExistsByUsernameAsync(string username);
+    Task<bool> ExistsByProfileIdAsync(int profileId);
     Task<bool> ExistsByEmailAsync(Email email);
     
 }

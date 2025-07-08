@@ -20,10 +20,9 @@ public static class UserResourceFromEntityAssembler
             entity.Email.EmailValue, 
             entity.BirthDate.BirthDateValue,
             entity.Gender.ToString(),
-            entity.Username,
-            entity.Password,
             entity.Image.Url,
-            entity.AboutMe);
+            entity.AboutMe,
+            entity.ProfileId);
     }
     
 }
