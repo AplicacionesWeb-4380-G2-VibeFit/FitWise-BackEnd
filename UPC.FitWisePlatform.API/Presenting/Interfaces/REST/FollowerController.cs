@@ -22,13 +22,11 @@ public class FollowerController(IFollowerCommandService  followerCommandService,
         Description = "Retrieves all followers available in the FitWise Platform.",
         OperationId = "GetAllFollowers")
     ]
-    [SwaggerResponse(StatusCodes.Status200OK, "Returns Followers",
-        typeof(IEnumerable<FollowerResource>))]
-    public async Task<IActionResult> GetAllFollowers()
+    [SwaggerResponse(StatusCodes.Status200OK, "Returns Followers", typeof(IEnumerable<FollowerResource>))]
+    public async Task<IActionResult> GetAllFollowers([FromQuery] int? followerUserId)
     {
-        var followers = await followerQueryService.Handle(new GetAllFollowerQuery());
-        var followerResources = 
-            followers.Select(FollowerResourceFromEntityAssembler.ToResourceFromEntity);
+        var followers = await followerQueryService.Handle(new GetAllFollowerQuery(followerUserId));
+        var followerResources = followers.Select(FollowerResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(followerResources);
     }
     

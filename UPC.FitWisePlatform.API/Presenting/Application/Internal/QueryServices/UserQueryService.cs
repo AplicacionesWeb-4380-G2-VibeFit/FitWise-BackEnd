@@ -15,6 +15,11 @@ public class UserQueryService(
 
     public async Task<IEnumerable<User>> Handle(GetAllUserQuery query)
     {
-        return await userRepository.ListAsync();
+        var users = await userRepository.ListAsync();
+        if (!string.IsNullOrWhiteSpace(query.EmailValue))
+            users = users.Where(u => u.Email.EmailValue == query.EmailValue);
+        if (query.ProfileId.HasValue)
+            users = users.Where(u => u.ProfileId == query.ProfileId.Value);
+        return users;
     }
 }
