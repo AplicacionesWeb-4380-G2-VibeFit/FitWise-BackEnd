@@ -15,10 +15,6 @@ public record Image
             !(uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
             throw new ArgumentException("La URL de la imagen no es válida.", nameof(url));
 
-        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp" };
-        if (!allowedExtensions.Any(ext => uriResult.AbsolutePath.EndsWith(ext, StringComparison.OrdinalIgnoreCase)))
-            throw new ArgumentException("La URL debe apuntar a una imagen (.jpg, .jpeg, .png, .gif, .bmp, .webp).", nameof(url));
-
         Url = url;
     }
 
