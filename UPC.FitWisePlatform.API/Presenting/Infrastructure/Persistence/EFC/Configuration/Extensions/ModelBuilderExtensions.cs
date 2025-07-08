@@ -16,7 +16,7 @@ public static class ModelBuilderExtensions
         builder.Entity<User>().OwnsOne(us => us.Email, pd =>
         {
             pd.WithOwner().HasForeignKey("Id");
-            pd.Property(a => a.EmailValue).IsRequired().HasMaxLength(360);
+            pd.Property(a => a.EmailValue).IsRequired().HasMaxLength(500);
         });
         builder.Entity<User>().OwnsOne(us => us.BirthDate, pd =>
         {
