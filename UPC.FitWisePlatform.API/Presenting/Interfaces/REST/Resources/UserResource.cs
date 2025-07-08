@@ -9,7 +9,6 @@ public record UserResource(
     string Email,
     string BirthDate,
     string Gender,
-    string Username,
-    string Password,
     string Image,
-    string AboutMe);
+    string AboutMe,
+    int ProfileId);

@@ -19,9 +19,8 @@ public static class CreateUserCommandFromResourceAssembler
             new Email(resource.Email),
             new BirthDate(resource.BirthDate),
             gender,
-            resource.Username,
-            resource.Password,
             new Image(resource.Image),
-            resource.AboutMe);
+            resource.AboutMe,
+            resource.ProfileId);
     }
 }

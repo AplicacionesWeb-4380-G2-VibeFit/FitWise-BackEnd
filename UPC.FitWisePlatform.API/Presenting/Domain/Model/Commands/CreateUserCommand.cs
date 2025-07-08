@@ -8,7 +8,6 @@ public record CreateUserCommand(
     Email Email,
     BirthDate BirthDate,
     Gender Gender,
-    string Username,
-    string Password,
     Image Image,
-    string AboutMe);
+    string AboutMe,
+    int ProfileId);

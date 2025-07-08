@@ -10,9 +10,9 @@ namespace UPC.FitWisePlatform.API.Presenting.Infrastructure.Persistence.EFC.Repo
 public class UserRepository(AppDbContext context) :
     BaseRepository<User>(context), IUserRepository
 {
-    public async Task<bool> ExistsByUsernameAsync(string username)
+    public async Task<bool> ExistsByProfileIdAsync(int profileId)
     {
-        return await Context.Set<User>().AnyAsync(us => us.Username == username);
+        return await Context.Set<User>().AnyAsync(us => us.ProfileId == profileId);
     }
 
     public async Task<bool> ExistsByEmailAsync(Email email)
