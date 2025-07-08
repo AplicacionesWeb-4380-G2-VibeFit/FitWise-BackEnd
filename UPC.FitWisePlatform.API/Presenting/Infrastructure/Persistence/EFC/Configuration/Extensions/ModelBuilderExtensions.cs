@@ -35,7 +35,12 @@ public static class ModelBuilderExtensions
             pd.Property(a => a.Url).IsRequired().HasMaxLength(200);
         });
         builder.Entity<User>().Property(us => us.AboutMe).IsRequired().HasMaxLength(500);
-        builder.Entity<User>().Property(us => us.ProfileId).IsRequired();
+        builder.Entity<User>()
+            .Property(us => us.ProfileId)
+            .IsRequired();
+        builder.Entity<User>()
+            .HasIndex(us => us.ProfileId)
+            .IsUnique();
         
         // Relación: Un User puede tener muchos Certificados 
         builder.Entity<User>()
