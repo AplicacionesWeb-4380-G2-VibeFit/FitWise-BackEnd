@@ -21,9 +21,9 @@ public class CertificateController(ICertificateCommandService certificateCommand
         OperationId = "GetAllCertificates")
     ]
     [SwaggerResponse(StatusCodes.Status200OK, "Returns Certificates", typeof(IEnumerable<CertificateResource>))]
-    public async Task<IActionResult> GetAllCertificates()
+    public async Task<IActionResult> GetAllCertificates([FromQuery] int? userId)
     {
-        var certificates = await certificateQueryService.Handle(new GetAllCertificateQuery());
+        var certificates = await certificateQueryService.Handle(new GetAllCertificateQuery(userId));
         var certificateResources = certificates.Select(CertificateResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(certificateResources);
     }

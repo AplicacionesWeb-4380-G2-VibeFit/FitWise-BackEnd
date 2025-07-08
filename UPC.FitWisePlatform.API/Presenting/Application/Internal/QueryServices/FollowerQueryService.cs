@@ -15,6 +15,9 @@ public class FollowerQueryService(
 
     public async Task<IEnumerable<Follower>> Handle(GetAllFollowerQuery query)
     {
-        return await followerRepository.ListAsync();
+        var followers = await followerRepository.ListAsync();
+        if (query.FollowerUserId.HasValue)
+            followers = followers.Where(f => f.FollowerUserId == query.FollowerUserId.Value);
+        return followers;
     }
 }

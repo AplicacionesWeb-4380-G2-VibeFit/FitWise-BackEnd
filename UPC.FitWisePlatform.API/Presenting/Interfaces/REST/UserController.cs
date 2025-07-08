@@ -22,13 +22,11 @@ public class UserController(IUserCommandService  userCommandService,
         Description = "Retrieves all users available in the FitWise Platform.",
         OperationId = "GetAllUsers")
     ]
-    [SwaggerResponse(StatusCodes.Status200OK, "Returns Users",
-        typeof(IEnumerable<UserResource>))]
-    public async Task<IActionResult> GetAllUsers()
+    [SwaggerResponse(StatusCodes.Status200OK, "Returns Users", typeof(IEnumerable<UserResource>))]
+    public async Task<IActionResult> GetAllUsers([FromQuery] string? emailValue, [FromQuery] int? profileId)
     {
-        var users = await userQueryService.Handle(new GetAllUserQuery());
-        var userResources = 
-            users.Select(UserResourceFromEntityAssembler.ToResourceFromEntity);
+        var users = await userQueryService.Handle(new GetAllUserQuery(emailValue, profileId));
+        var userResources = users.Select(UserResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(userResources);
     }
     

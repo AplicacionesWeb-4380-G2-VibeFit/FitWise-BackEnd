@@ -15,6 +15,9 @@ public class CertificateQueryService(
 
     public async Task<IEnumerable<Certificate>> Handle(GetAllCertificateQuery query)
     {
-        return await certificateRepository.ListAsync();
+        var certificates = await certificateRepository.ListAsync();
+        if (query.UserId.HasValue)
+            certificates = certificates.Where(c => c.UserId == query.UserId.Value);
+        return certificates;
     }
 }
