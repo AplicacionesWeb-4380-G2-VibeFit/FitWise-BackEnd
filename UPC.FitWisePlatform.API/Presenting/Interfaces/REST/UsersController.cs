@@ -13,7 +13,7 @@ namespace UPC.FitWisePlatform.API.Presenting.Interfaces.REST;
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 [SwaggerTag("Available operations for managing users in the FitWise Platform.")]
-public class UserController(IUserCommandService  userCommandService,
+public class UsersController(IUserCommandService  userCommandService,
     IUserQueryService  userQueryService) : ControllerBase
 {
     [HttpGet]
