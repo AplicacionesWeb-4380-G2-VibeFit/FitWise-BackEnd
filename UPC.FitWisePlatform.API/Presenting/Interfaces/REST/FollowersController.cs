@@ -13,7 +13,7 @@ namespace UPC.FitWisePlatform.API.Presenting.Interfaces.REST;
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 [SwaggerTag("Available operations for managing followers in the FitWise Platform.")]
-public class FollowerController(IFollowerCommandService  followerCommandService,
+public class FollowersController(IFollowerCommandService  followerCommandService,
     IFollowerQueryService  followerQueryService) : ControllerBase
 {
     [HttpGet]

@@ -11,7 +11,7 @@ using UPC.FitWisePlatform.API.Presenting.Interfaces.REST.Transform;
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 [SwaggerTag("Available operations for managing certificates in the FitWise Platform.")]
-public class CertificateController(ICertificateCommandService certificateCommandService,
+public class CertificatesController(ICertificateCommandService certificateCommandService,
     ICertificateQueryService certificateQueryService) : ControllerBase
 {
     [HttpGet]
