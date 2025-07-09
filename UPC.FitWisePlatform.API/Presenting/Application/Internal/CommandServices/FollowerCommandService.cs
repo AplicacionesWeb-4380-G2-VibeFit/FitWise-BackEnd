@@ -13,7 +13,7 @@ public class FollowerCommandService(IFollowerRepository followerRepository,
     {
         if (await followerRepository.ExistsByFollowerUserIdAndFollowedUserIdAsync(
                 command.FollowerUserId, command.FollowedUserId))
-            throw new Exception("User with the same email already exists");
+            throw new Exception("User with the same FollowerUserId and FollowedUserId already exists");
         
         var follower = new Follower(
             command.FollowerUserId, command.FollowedUserId);
