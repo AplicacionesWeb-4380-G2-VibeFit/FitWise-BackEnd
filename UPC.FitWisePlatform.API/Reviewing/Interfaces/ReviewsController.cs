@@ -20,7 +20,7 @@ public class ReviewsController(IReviewCommandService commandService, IReviewQuer
     [HttpGet]
     [SwaggerOperation(
         Summary = "Get all reviews",
-        Description = "Retrieves all reviews registered in the FitWise Platform.",
+        Description = "Retrieves all reviews available in the FitWise Platform.",
         OperationId = "GetAllReviews")
     ]
     [SwaggerResponse(StatusCodes.Status200OK, "Returns a list of reviews", typeof(IEnumerable<ReviewResource>))]
@@ -32,8 +32,8 @@ public class ReviewsController(IReviewCommandService commandService, IReviewQuer
 
     [HttpGet("{id:int}")]
     [SwaggerOperation(
-        Summary = "Get review by Id",
-        Description = "Retrieves a review by its unique identifier.",
+        Summary = "Get a review by Id",
+        Description = "Retrieves a single review by its identifier.",
         OperationId = "GetReviewById")
     ]
     [SwaggerResponse(StatusCodes.Status200OK, "Returns the review", typeof(ReviewResource))]
@@ -46,7 +46,7 @@ public class ReviewsController(IReviewCommandService commandService, IReviewQuer
 
     [HttpGet("by-health-plan/{healthPlanId:int}")]
     [SwaggerOperation(
-        Summary = "Get reviews by Health Plan Id",
+        Summary = "Get reviews by health plan Id",
         Description = "Retrieves all reviews associated with a specific health plan.",
         OperationId = "GetReviewsByHealthPlanId")
     ]
@@ -60,7 +60,7 @@ public class ReviewsController(IReviewCommandService commandService, IReviewQuer
     [HttpPost]
     [SwaggerOperation(
         Summary = "Create a new review",
-        Description = "Creates a new review for a health plan.",
+        Description = "Creates a new review in the FitWise Platform.",
         OperationId = "CreateReview")
     ]
     [SwaggerResponse(StatusCodes.Status201Created, "The review was created successfully", typeof(ReviewResource))]
@@ -75,11 +75,11 @@ public class ReviewsController(IReviewCommandService commandService, IReviewQuer
 
     [HttpPut("{id:int}")]
     [SwaggerOperation(
-        Summary = "Update review by Id",
-        Description = "Updates an existing review.",
+        Summary = "Update a review by Id",
+        Description = "Updates an existing review identified by Id.",
         OperationId = "UpdateReview")
     ]
-    [SwaggerResponse(StatusCodes.Status200OK, "The review was updated", typeof(ReviewResource))]
+    [SwaggerResponse(StatusCodes.Status200OK, "The review was updated successfully", typeof(ReviewResource))]
     [SwaggerResponse(StatusCodes.Status404NotFound, "Review not found")]
     public async Task<IActionResult> Update(int id, [FromBody] CreateReviewResource resource)
     {
@@ -90,8 +90,8 @@ public class ReviewsController(IReviewCommandService commandService, IReviewQuer
 
     [HttpDelete("{id:int}")]
     [SwaggerOperation(
-        Summary = "Delete review by Id",
-        Description = "Deletes a review by its unique identifier.",
+        Summary = "Delete a review by Id",
+        Description = "Deletes a review from the FitWise Platform.",
         OperationId = "DeleteReview")
     ]
     [SwaggerResponse(StatusCodes.Status204NoContent, "The review was deleted successfully")]
