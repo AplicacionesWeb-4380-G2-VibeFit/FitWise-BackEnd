@@ -58,13 +58,12 @@ public class TokenService(IOptions<TokenSettings> tokenSettings) : ITokenService
      */
     public async Task<int?> ValidateToken(string token)
     {
-        // If token is null or empty
         if (string.IsNullOrEmpty(token))
-            // Return null 
             return null;
-        // Otherwise, perform validation
+
         var tokenHandler = new JsonWebTokenHandler();
         var key = Encoding.ASCII.GetBytes(_tokenSettings.Secret);
+
         try
         {
             var tokenValidationResult = await tokenHandler.ValidateTokenAsync(token, new TokenValidationParameters
@@ -73,17 +72,37 @@ public class TokenService(IOptions<TokenSettings> tokenSettings) : ITokenService
                 IssuerSigningKey = new SymmetricSecurityKey(key),
                 ValidateIssuer = false,
                 ValidateAudience = false,
-                // Expiration without delay
                 ClockSkew = TimeSpan.Zero
             });
 
+            // Verificar si la validación fue exitosa antes de intentar acceder al token
+            if (!tokenValidationResult.IsValid)
+            {
+                Console.WriteLine($"Token validation failed: {tokenValidationResult.Exception?.Message}");
+                return null;
+            }
+
             var jwtToken = (JsonWebToken)tokenValidationResult.SecurityToken;
-            var userId = int.Parse(jwtToken.Claims.First(claim => claim.Type == ClaimTypes.Sid).Value);
-            return userId;
+
+            // ***** CAMBIO CLAVE AQUI *****
+            // Usar FirstOrDefault() para evitar InvalidOperationException si el claim no existe
+            // y luego TryParse para la conversión segura a int.
+            var sidClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid);
+
+            if (sidClaim != null && int.TryParse(sidClaim.Value, out int userId))
+            {
+                return userId;
+            }
+            else
+            {
+                // Esto se ejecutará si el claim no se encuentra o no es un entero válido
+                Console.WriteLine("Claim 'sid' not found or could not be parsed to integer.");
+                return null;
+            }
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            Console.WriteLine($"An exception occurred during token validation: {e}");
             return null;
         }
     }
