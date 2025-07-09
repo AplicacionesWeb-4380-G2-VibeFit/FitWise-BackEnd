@@ -46,6 +46,11 @@ public partial class Certificate
         if (yearsOfWork <= 0)
             throw new ArgumentOutOfRangeException(nameof(yearsOfWork), "YearsOfWork must be greater than zero.");
         
+        // Validar que el año de emisión en el código coincida con la fecha de obtención
+        var codeYear = int.Parse(certificateCode.CodeValue.Split('-')[1]);
+        var obtainedYear = DateTime.ParseExact(dateObtained.DateObtainedValue, "MM/dd/yyyy", null).Year;
+        if (codeYear != obtainedYear)
+            throw new ArgumentException("El año de emisión en el código de certificado no coincide con la fecha de obtención.", nameof(certificateCode));
         
         this.UserId = userId;
         this.Institution = institution;
