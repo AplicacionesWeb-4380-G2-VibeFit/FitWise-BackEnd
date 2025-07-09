@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UPC.FitWisePlatform.API.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 using UPC.FitWisePlatform.API.Selling.Application.Internal.QueryServices;
 using UPC.FitWisePlatform.API.Selling.Domain.Model.Commands;
 using UPC.FitWisePlatform.API.Selling.Application.Internal.CommandServices;
 
 namespace UPC.FitWisePlatform.API.Selling.Interfaces;
 
+[Authorize]
 [ApiController]
 [Route("api/v1/purchased-plans")]
 public class PurchasedPlansController(

@@ -8,6 +8,19 @@ using UPC.FitWisePlatform.API.Shared.Infrastructure.Persistence.EFC.Repositories
 using Cortex.Mediator.Behaviors;
 using Cortex.Mediator.Commands;
 using Cortex.Mediator.DependencyInjection;
+using UPC.FitWisePlatform.API.IAM.Application.Internal.CommandServices;
+using UPC.FitWisePlatform.API.IAM.Application.Internal.OutboundServices;
+using UPC.FitWisePlatform.API.IAM.Application.Internal.OutboundServices.Services;
+using UPC.FitWisePlatform.API.IAM.Application.Internal.QueryServices;
+using UPC.FitWisePlatform.API.IAM.Domain.Repositories;
+using UPC.FitWisePlatform.API.IAM.Domain.Services;
+using UPC.FitWisePlatform.API.IAM.Infrastructure.Hashing.BCrypt.Services;
+using UPC.FitWisePlatform.API.IAM.Infrastructure.Persistence.EFC.Repositories;
+using UPC.FitWisePlatform.API.IAM.Infrastructure.Pipeline.Middleware.Components;
+using UPC.FitWisePlatform.API.IAM.Infrastructure.Tokens.JWT.Configuration;
+using UPC.FitWisePlatform.API.IAM.Infrastructure.Tokens.JWT.Services;
+using UPC.FitWisePlatform.API.IAM.Interfaces.ACL;
+using UPC.FitWisePlatform.API.IAM.Interfaces.ACL.Services;
 
 // Publishing
 using UPC.FitWisePlatform.API.Publishing.Application.Internal.CommandServices;
@@ -40,23 +53,23 @@ using UPC.FitWisePlatform.API.Presenting.Application.Internal.QueryServices;
 using UPC.FitWisePlatform.API.Presenting.Domain.Repositories;
 using UPC.FitWisePlatform.API.Presenting.Domain.Services;
 using UPC.FitWisePlatform.API.Presenting.Infrastructure.Persistence.EFC.Repositories;
+using UPC.FitWisePlatform.API.Presenting.Interfaces.ACL;
+using UPC.FitWisePlatform.API.Presenting.Interfaces.ACL.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Lower Case URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-builder.WebHost.UseUrls("http://0.0.0.0:8080");
+// builder.WebHost.UseUrls("http://0.0.0.0:8080");
 
-// CORS
+// Add CORS Policy
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("PermitirFrontend", policy =>
-    {
-        policy.WithOrigins("http://localhost:5173")
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
+    options.AddPolicy("AllowAllPolicy",
+        policy => policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 });
 
 // Kebab-case route naming
@@ -98,12 +111,12 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title = "ACME.LearningCenter.Platform.API",
         Version = "v1",
-        Description = "ACME LearningCenter Platform API",
+        Description = "UPC FitWise Platform API",
         TermsOfService = new Uri("https://acme-learning.com/tos"),
         Contact = new OpenApiContact
         {
             Name = "ACME Studios",
-            Email = "contact@acme.com"
+            Email = "contact@upc.com"
         },
         License = new OpenApiLicense
         {
@@ -111,6 +124,30 @@ builder.Services.AddSwaggerGen(options =>
             Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0.html")
         }
     });
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "bearer"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+    options.EnableAnnotations();
 });
 
 // Dependency Injection
@@ -173,6 +210,19 @@ builder.Services.AddScoped<IReviewQueryService, ReviewQueryService>();
 builder.Services.AddScoped<IReviewCommentQueryService, ReviewCommentQueryService>();
 builder.Services.AddScoped<IReviewReportQueryService, ReviewReportQueryService>();
 
+// IAM Bounded Context Injection Configuration
+
+// TokenSettings Configuration
+
+builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
+
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IProfileCommandService, ProfileCommandService>();
+builder.Services.AddScoped<IProfileQueryService, ProfileQueryService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IHashingService, HashingService>();
+builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
+
 // Mediator
 builder.Services.AddScoped(typeof(ICommandPipelineBehavior<>), typeof(LoggingCommandBehavior<>));
 builder.Services.AddCortexMediator(
@@ -201,10 +251,14 @@ builder.Services.AddScoped<ICertificateRepository, CertificateRepository>();
 builder.Services.AddScoped<IUserCommandService, UserCommandService>();
 builder.Services.AddScoped<IFollowerCommandService, FollowerCommandService>();
 builder.Services.AddScoped<ICertificateCommandService, CertificateCommandService>();
+
 // Query Services
 builder.Services.AddScoped<IUserQueryService, UserQueryService>();
 builder.Services.AddScoped<IFollowerQueryService, FollowerQueryService>();
 builder.Services.AddScoped<ICertificateQueryService, CertificateQueryService>();
+
+builder.Services.AddScoped<IPresentingContextFacade, PresentingContextFacade>();
+builder.Services.AddScoped<IPresentingExternalService, PresentingExternalService>();
 
 
 var app = builder.Build();
@@ -226,12 +280,22 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+// Apply CORS Policy
+app.UseCors("AllowAllPolicy");
 
 // Middleware
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseCors("PermitirFrontend");
+app.UseRouting();
 app.UseHttpsRedirection();
+app.UseMiddleware<RequestAuthorizationMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

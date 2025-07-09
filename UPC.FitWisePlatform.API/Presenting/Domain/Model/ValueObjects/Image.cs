@@ -2,7 +2,7 @@
 
 public record Image
 {
-    public string Url { get; }
+    public string Url { get; private set; }
     
     public Image () {}
 

@@ -6,4 +6,5 @@ namespace UPC.FitWisePlatform.API.Publishing.Domain.Services;
 public interface IExerciseQueryService
 {
     Task<Exercise?> Handle(GetExerciseByIdQuery query);
+    Task<IEnumerable<Exercise>> Handle(GetAllExercisesQuery query);
 }

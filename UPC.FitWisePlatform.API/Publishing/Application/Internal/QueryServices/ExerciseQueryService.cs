@@ -12,4 +12,9 @@ public class ExerciseQueryService(
     {
         return await exerciseRepository.FindByIdAsync(query.Id);
     }
+
+    public async Task<IEnumerable<Exercise>> Handle(GetAllExercisesQuery query)
+    {
+        return await exerciseRepository.ListAsync();
+    }
 }

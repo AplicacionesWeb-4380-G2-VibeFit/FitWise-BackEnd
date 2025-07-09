@@ -1,6 +1,7 @@
 ﻿using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using UPC.FitWisePlatform.API.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 using UPC.FitWisePlatform.API.Publishing.Domain.Model.Queries;
 using UPC.FitWisePlatform.API.Publishing.Domain.Services;
 using UPC.FitWisePlatform.API.Publishing.Interfaces.REST.Resources;
@@ -8,6 +9,7 @@ using UPC.FitWisePlatform.API.Publishing.Interfaces.REST.Transform;
 
 namespace UPC.FitWisePlatform.API.Publishing.Interfaces.REST;
 
+[Authorize]
 [ApiController]
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
@@ -17,6 +19,19 @@ public class ExercisesController
     IExerciseCommandService  exerciseCommandService,
     IExerciseQueryService  exerciseQueryService) : ControllerBase
 {
+    [HttpGet]
+    [SwaggerOperation(
+        Summary = "Get all exercises",
+        Description = "Get all exercises",
+        OperationId = "GetAllExercises")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Returns all exercises", typeof(IEnumerable<MealResource>))]
+    public async Task<IActionResult> GetAllMeals()
+    {
+        var exercises = await exerciseQueryService.Handle(new GetAllExercisesQuery());
+        var exercisesResources =  exercises.Select(ExerciseResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(exercisesResources);
+    }
+    
     [HttpGet("{id:int}")]
     [SwaggerOperation(
         Summary = "Get exercise by Id",

@@ -15,6 +15,13 @@ public class HealthPlanMealRepository(AppDbContext context) :
         return await Context.Set<HealthPlanMeal>().Where(hpm => hpm.HealthPlanId == healthPlanId).ToListAsync();
     }
 
+    public async Task<IEnumerable<HealthPlanMeal>> FindByHealthPlanIdAndDayOfWeekAsync(int healthPlanId, DayOfWeekType dayOfWeek)
+    {
+        return await Context.Set<HealthPlanMeal>()
+            .Where(hpm => hpm.HealthPlanId == healthPlanId && hpm.DayOfWeek == dayOfWeek)
+            .ToListAsync();
+    }
+
     public async Task<bool> ExistsSameAssignmentOnDayOfWeekAsync(int healthPlanId, int mealId, DayOfWeekType dayOfWeek)
     {
         return await Context.Set<HealthPlanMeal>().AnyAsync(hpm =>

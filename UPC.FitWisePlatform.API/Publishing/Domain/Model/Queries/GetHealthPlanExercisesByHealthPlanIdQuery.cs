@@ -1,3 +1,5 @@
-﻿namespace UPC.FitWisePlatform.API.Publishing.Domain.Model.Queries;
+﻿using UPC.FitWisePlatform.API.Publishing.Domain.Model.ValueObjects;
 
-public record GetHealthPlanExercisesByHealthPlanIdQuery(int HealthPlanId);
+namespace UPC.FitWisePlatform.API.Publishing.Domain.Model.Queries;
+
+public record GetHealthPlanExercisesByHealthPlanIdQuery(int HealthPlanId, DayOfWeekType? DayOfWeek = null);

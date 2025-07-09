@@ -44,14 +44,29 @@ public class HealthPlanMealCommandService(
 
         if (healthPlanMeal == null)
             throw new ArgumentException($"Health Plan with ID {command.HealthPlanId} not found.");
+        
+        // Validar que los IDs correspondan
         if (healthPlanMeal.HealthPlanId != command.HealthPlanId || healthPlanMeal.MealId != command.MealId)
-            throw new ArgumentException($"Health Plan Id: {command.HealthPlanId} or Meal Id: {command.MealId} not " +
-                                        $"correspond to the Health Plan Meal.");
-        if (await healthPlanMealRepository.ExistsSameAssignmentOnDayOfWeekAsync(command.HealthPlanId,
-                command.MealId, command.DayOfWeek))
+            throw new ArgumentException($"Health Plan Id: {command.HealthPlanId} or Meal Id: {command.MealId} " +
+                                        "do not correspond to the Health Plan Meal.");
+        
+        // Verificar si el usuario está intentando cambiar los campos sensibles
+        var isChangingAssignment = 
+            healthPlanMeal.HealthPlanId != command.HealthPlanId ||
+            healthPlanMeal.MealId != command.MealId ||
+            healthPlanMeal.DayOfWeek != command.DayOfWeek;
+        
+        if (isChangingAssignment)
         {
-            throw new Exception($"Health Plan Meal with the same healthPlanId: {command.HealthPlanId}, " +
-                                $"mealId: {command.MealId}, dayOfWeek: {command.DayOfWeek}, " + " already exists.");
+            var existsDuplicate = await healthPlanMealRepository.ExistsSameAssignmentOnDayOfWeekAsync(
+                command.HealthPlanId, command.MealId, command.DayOfWeek);
+        
+            if (existsDuplicate)
+            {
+                throw new Exception($"Health Plan Meal with the same HealthPlanId: {command.HealthPlanId}, " +
+                                    $"MealId: {command.MealId}, DayOfWeek: {command.DayOfWeek}, " +
+                                    $"MealTime: {command.MealTime} already exists.");
+            }
         }
         
         healthPlanMeal.UpdateDetails(command.DayOfWeek, command.MealTime, command.Notes);

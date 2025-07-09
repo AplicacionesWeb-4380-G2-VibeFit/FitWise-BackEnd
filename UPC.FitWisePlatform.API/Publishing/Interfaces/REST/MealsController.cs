@@ -1,6 +1,7 @@
 ﻿using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using UPC.FitWisePlatform.API.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 using UPC.FitWisePlatform.API.Publishing.Domain.Model.Queries;
 using UPC.FitWisePlatform.API.Publishing.Domain.Services;
 using UPC.FitWisePlatform.API.Publishing.Interfaces.REST.Resources;
@@ -8,6 +9,7 @@ using UPC.FitWisePlatform.API.Publishing.Interfaces.REST.Transform;
 
 namespace UPC.FitWisePlatform.API.Publishing.Interfaces.REST;
 
+[Authorize]
 [ApiController]
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
@@ -17,6 +19,19 @@ public class MealsController
     IMealCommandService  mealCommandService,
     IMealQueryService  mealQueryService) : ControllerBase
 {
+    [HttpGet]
+    [SwaggerOperation(
+        Summary = "Get all meals",
+        Description = "Get all meals",
+        OperationId = "GetAllMeals")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Returns all meals", typeof(IEnumerable<MealResource>))]
+    public async Task<IActionResult> GetAllMeals()
+    {
+        var meals = await mealQueryService.Handle(new GetAllMealsQuery());
+        var mealsResources =  meals.Select(MealResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(mealsResources);
+    }
+    
     [HttpGet("{id:int}")]
     [SwaggerOperation(
         Summary = "Get meal by Id",
