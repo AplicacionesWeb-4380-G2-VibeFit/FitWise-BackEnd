@@ -46,7 +46,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Configure Lower Case URLs
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-builder.WebHost.UseUrls("http://0.0.0.0:8080");
+// builder.WebHost.UseUrls("http://0.0.0.0:8080");
 
 // CORS
 builder.Services.AddCors(options =>

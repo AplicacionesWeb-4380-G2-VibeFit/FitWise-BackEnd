@@ -14,7 +14,7 @@ public partial class HealthPlanExercise
     public int? DurationInMinutes { get; private set; }
     public string Instructions { get; private set; }
     
-    public UPC.FitWisePlatform.API.Publishing.Domain.Model.Aggregate.HealthPlan HealthPlan { get; private set; }
+    public HealthPlan HealthPlan { get; private set; }
     public Exercise Exercise { get; private set; }
     
     public HealthPlanExercise() { }

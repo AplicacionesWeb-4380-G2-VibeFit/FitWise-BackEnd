@@ -15,6 +15,13 @@ public class HealthPlanExerciseRepository(AppDbContext context) :
         return await Context.Set<HealthPlanExercise>().Where(hpe => hpe.HealthPlanId == healthPlanId).ToListAsync();
     }
 
+    public async Task<IEnumerable<HealthPlanExercise>> FindByHealthPlanIdAndDayOfWeekAsync(int healthPlanId, DayOfWeekType dayOfWeek)
+    {
+        return await Context.Set<HealthPlanExercise>()
+            .Where(hpm => hpm.HealthPlanId == healthPlanId && hpm.DayOfWeek == dayOfWeek)
+            .ToListAsync();
+    }
+
     public async Task<bool> ExistsSameAssignmentOnDayOfWeekAsync(int healthPlanId, int exerciseId, DayOfWeekType dayOfWeek)
     {
         return await Context.Set<HealthPlanExercise>().AnyAsync(

@@ -17,6 +17,19 @@ public class MealsController
     IMealCommandService  mealCommandService,
     IMealQueryService  mealQueryService) : ControllerBase
 {
+    [HttpGet]
+    [SwaggerOperation(
+        Summary = "Get all meals",
+        Description = "Get all meals",
+        OperationId = "GetAllMeals")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Returns all meals", typeof(IEnumerable<MealResource>))]
+    public async Task<IActionResult> GetAllMeals()
+    {
+        var meals = await mealQueryService.Handle(new GetAllMealsQuery());
+        var mealsResources =  meals.Select(MealResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(mealsResources);
+    }
+    
     [HttpGet("{id:int}")]
     [SwaggerOperation(
         Summary = "Get meal by Id",

@@ -17,6 +17,19 @@ public class ExercisesController
     IExerciseCommandService  exerciseCommandService,
     IExerciseQueryService  exerciseQueryService) : ControllerBase
 {
+    [HttpGet]
+    [SwaggerOperation(
+        Summary = "Get all exercises",
+        Description = "Get all exercises",
+        OperationId = "GetAllExercises")]
+    [SwaggerResponse(StatusCodes.Status200OK, "Returns all exercises", typeof(IEnumerable<MealResource>))]
+    public async Task<IActionResult> GetAllMeals()
+    {
+        var exercises = await exerciseQueryService.Handle(new GetAllExercisesQuery());
+        var exercisesResources =  exercises.Select(ExerciseResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(exercisesResources);
+    }
+    
     [HttpGet("{id:int}")]
     [SwaggerOperation(
         Summary = "Get exercise by Id",

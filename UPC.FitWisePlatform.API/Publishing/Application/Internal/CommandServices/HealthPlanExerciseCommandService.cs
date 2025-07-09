@@ -44,15 +44,24 @@ public class HealthPlanExerciseCommandService(
         
         if (healthPlanExercise == null)
             throw new ArgumentException($"Health Plan Exercise with ID {command.Id} not found.");
-        if (healthPlanExercise.HealthPlanId != command.HealthPlanId || healthPlanExercise.ExerciseId != command.ExerciseId)
+        if (healthPlanExercise.HealthPlanId != command.HealthPlanId ||
+            healthPlanExercise.ExerciseId != command.ExerciseId)
+        {
             throw new ArgumentException($"Health Plan Id: {command.HealthPlanId} or Exercise Id: {command.ExerciseId} not" +
                                         $" correspond to the Health Plan Exercise.");
-        if (await healthPlanExerciseRepository.ExistsSameAssignmentOnDayOfWeekAsync(command.HealthPlanId,
-                command.ExerciseId, command.DayOfWeek))
-        {
-            throw new Exception($"Health Plan Exercise with the same healthPlanId: {command.HealthPlanId}, " +
-                                $"exerciseId: {command.ExerciseId}, dayOfWeek: {command.DayOfWeek} already exists.");
         }
+        
+        // Solo validar duplicado si DayOfWeek cambia
+    if (command.DayOfWeek != healthPlanExercise.DayOfWeek)
+    {
+        var existsDuplicate = await healthPlanExerciseRepository
+            .ExistsSameAssignmentOnDayOfWeekAsync(command.HealthPlanId, command.ExerciseId, command.DayOfWeek);
+        
+        if (existsDuplicate)
+        {
+            throw new Exception($"Health Plan Exercise with the same healthPlanId: {command.HealthPlanId}, exerciseId: {command.ExerciseId}, dayOfWeek: {command.DayOfWeek} already exists.");
+        }
+    }
         
         healthPlanExercise.UpdateDetails(command.DayOfWeek, command.Instructions, command.Sets, command.Reps,
             command.DurationMinutes);

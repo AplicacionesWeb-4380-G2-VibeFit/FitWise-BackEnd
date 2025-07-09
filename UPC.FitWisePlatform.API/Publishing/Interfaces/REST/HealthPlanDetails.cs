@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using UPC.FitWisePlatform.API.Publishing.Domain.Model.Queries;
+using UPC.FitWisePlatform.API.Publishing.Domain.Model.ValueObjects;
 using UPC.FitWisePlatform.API.Publishing.Domain.Services;
 using UPC.FitWisePlatform.API.Publishing.Interfaces.REST.Resources;
 using UPC.FitWisePlatform.API.Publishing.Interfaces.REST.Transform;
@@ -9,7 +10,7 @@ using UPC.FitWisePlatform.API.Publishing.Interfaces.REST.Transform;
 namespace UPC.FitWisePlatform.API.Publishing.Interfaces.REST;
 
 [ApiController]
-[Route("api/v1/health-plans/{healthPlanId:int}")]
+[Route("api/v1/health-plan/{healthPlanId:int}")]
 [Produces(MediaTypeNames.Application.Json)]
 [SwaggerTag("Operations for managing details within a specific health plan.")]
 public class HealthPlanDetails(IHealthPlanExerciseQueryService healthPlanExerciseQueryService,
@@ -23,9 +24,11 @@ public class HealthPlanDetails(IHealthPlanExerciseQueryService healthPlanExercis
     ]
     [SwaggerResponse(StatusCodes.Status200OK, "Returns list of health plan exercises",
         typeof(IEnumerable<HealthPlanExerciseResource>))]
-    public async Task<IActionResult> GetHealthPlanExercisesByHealthPlanId(int healthPlanId)
+    public async Task<IActionResult> GetHealthPlanExercisesByHealthPlanId(
+        int healthPlanId,
+        [FromQuery] DayOfWeekType? dayOfWeek = null)
     {
-        var getHealthPlanExercisesByHealthPlanIdQuery = new GetHealthPlanExercisesByHealthPlanIdQuery(healthPlanId);
+        var getHealthPlanExercisesByHealthPlanIdQuery = new GetHealthPlanExercisesByHealthPlanIdQuery(healthPlanId, dayOfWeek);
         var healthPlanExercises =
             await healthPlanExerciseQueryService.Handle(getHealthPlanExercisesByHealthPlanIdQuery);
         var healthPlanExerciseResources =
@@ -41,9 +44,11 @@ public class HealthPlanDetails(IHealthPlanExerciseQueryService healthPlanExercis
     ]
     [SwaggerResponse(StatusCodes.Status200OK, "Returns list of health plan meals",
         typeof(IEnumerable<HealthPlanMealResource>))]
-    public async Task<IActionResult> GetHealthPlanMealsByHealthPlanId(int healthPlanId)
+    public async Task<IActionResult> GetHealthPlanMealsByHealthPlanId(
+        int healthPlanId,
+        [FromQuery] DayOfWeekType? dayOfWeek = null)
     {
-        var getHealthPlanMealsByHealthPlanIdQuery = new GetHealthPlanMealsByHealthPlanIdQuery(healthPlanId);
+        var getHealthPlanMealsByHealthPlanIdQuery = new GetHealthPlanMealsByHealthPlanIdQuery(healthPlanId, dayOfWeek);
         var healthPlanMeals =
             await healthPlanMealQueryService.Handle(getHealthPlanMealsByHealthPlanIdQuery);
         var healthPlanMealResources =
