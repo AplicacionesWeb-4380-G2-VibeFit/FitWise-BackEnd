@@ -1,6 +1,7 @@
 ﻿using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using UPC.FitWisePlatform.API.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 using UPC.FitWisePlatform.API.Publishing.Domain.Model.Queries;
 using UPC.FitWisePlatform.API.Publishing.Domain.Model.ValueObjects;
 using UPC.FitWisePlatform.API.Publishing.Domain.Services;
@@ -9,6 +10,7 @@ using UPC.FitWisePlatform.API.Publishing.Interfaces.REST.Transform;
 
 namespace UPC.FitWisePlatform.API.Publishing.Interfaces.REST;
 
+[Authorize]
 [ApiController]
 [Route("api/v1/health-plans/{healthPlanId:int}")]
 [Produces(MediaTypeNames.Application.Json)]

@@ -1,5 +1,6 @@
 ﻿using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
+using UPC.FitWisePlatform.API.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 using UPC.FitWisePlatform.API.Organizing.Domain.Model.Commands;
 using UPC.FitWisePlatform.API.Organizing.Domain.Model.Queries;
 using UPC.FitWisePlatform.API.Organizing.Domain.Services;
@@ -8,7 +9,7 @@ using UPC.FitWisePlatform.API.Organizing.Interfaces.REST.Transform;
 
 namespace UPC.FitWisePlatform.API.Organizing.Interfaces;
 
-
+[Authorize]
 [ApiController]
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]

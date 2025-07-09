@@ -16,6 +16,7 @@ using UPC.FitWisePlatform.API.IAM.Domain.Repositories;
 using UPC.FitWisePlatform.API.IAM.Domain.Services;
 using UPC.FitWisePlatform.API.IAM.Infrastructure.Hashing.BCrypt.Services;
 using UPC.FitWisePlatform.API.IAM.Infrastructure.Persistence.EFC.Repositories;
+using UPC.FitWisePlatform.API.IAM.Infrastructure.Pipeline.Middleware.Components;
 using UPC.FitWisePlatform.API.IAM.Infrastructure.Tokens.JWT.Configuration;
 using UPC.FitWisePlatform.API.IAM.Infrastructure.Tokens.JWT.Services;
 using UPC.FitWisePlatform.API.IAM.Interfaces.ACL;
@@ -292,7 +293,9 @@ app.UseCors("AllowAllPolicy");
 // Middleware
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseRouting();
 app.UseHttpsRedirection();
+app.UseMiddleware<RequestAuthorizationMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
