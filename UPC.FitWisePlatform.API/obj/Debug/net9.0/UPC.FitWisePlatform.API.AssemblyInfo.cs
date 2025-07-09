@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UPC.FitWisePlatform.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ea006608c463cba8736b99da032d2daca87ffa4f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+79cacc6f6f637926f033c225c03749caea0ecc5e")]
 [assembly: System.Reflection.AssemblyProductAttribute("UPC.FitWisePlatform.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UPC.FitWisePlatform.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

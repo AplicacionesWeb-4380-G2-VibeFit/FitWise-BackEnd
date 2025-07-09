@@ -6,7 +6,7 @@ using UPC.FitWisePlatform.API.Selling.Domain.Model.Commands;
 namespace UPC.FitWisePlatform.API.Selling.Interfaces;
 
 [ApiController]
-[Route("api/v1/purchase-history")]
+[Route("api/v1/purchase-histories")]
 public class PurchaseHistoriesController(
     PurchaseHistoryCommandService commandService,
     PurchaseHistoryQueryService queryService)
