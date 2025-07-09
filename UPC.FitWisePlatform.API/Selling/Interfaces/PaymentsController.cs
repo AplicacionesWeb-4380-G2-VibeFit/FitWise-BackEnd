@@ -7,7 +7,7 @@ using UPC.FitWisePlatform.API.Selling.Domain.Model.Entities;
 namespace UPC.FitWisePlatform.API.Selling.Interfaces;
 [ApiController]
 [Route("api/v1/payments")]
-public class PaymentController(
+public class PaymentsController(
     PaymentCommandService paymentCommandService,
     PaymentQueryService paymentQueryService)
     : ControllerBase

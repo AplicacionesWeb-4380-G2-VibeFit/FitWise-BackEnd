@@ -12,7 +12,7 @@ namespace UPC.FitWisePlatform.API.Publishing.Interfaces.REST;
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 [SwaggerTag("Available operations for managing meals in the FitWise Platform.")]
-public class MealController
+public class MealsController
 (
     IMealCommandService  mealCommandService,
     IMealQueryService  mealQueryService) : ControllerBase

@@ -12,7 +12,7 @@ namespace UPC.FitWisePlatform.API.Publishing.Interfaces.REST;
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 [SwaggerTag("Available operations for managing exercises in the FitWise Platform.")]
-public class ExerciseController
+public class ExercisesController
 (
     IExerciseCommandService  exerciseCommandService,
     IExerciseQueryService  exerciseQueryService) : ControllerBase

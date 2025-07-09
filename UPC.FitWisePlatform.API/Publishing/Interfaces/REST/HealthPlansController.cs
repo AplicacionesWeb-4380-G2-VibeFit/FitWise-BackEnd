@@ -14,7 +14,7 @@ namespace UPC.FitWisePlatform.API.Publishing.Interfaces.REST;
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 [SwaggerTag("Available operations for managing health plans in the FitWise Platform.")]
-public class HealthPlanController
+public class HealthPlansController
 (
     IHealthPlanCommandService  healthPlanCommandService,
     IHealthPlanQueryService  healthPlanQueryService) : ControllerBase

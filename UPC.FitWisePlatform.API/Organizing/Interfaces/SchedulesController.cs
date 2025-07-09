@@ -12,7 +12,7 @@ namespace UPC.FitWisePlatform.API.Organizing.Interfaces;
 [ApiController]
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
-public class ScheduleController(IScheduleCommandService commandService, IScheduleQueryService queryService) : ControllerBase
+public class SchedulesController(IScheduleCommandService commandService, IScheduleQueryService queryService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAll()

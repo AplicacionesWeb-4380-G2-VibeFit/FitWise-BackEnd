@@ -7,7 +7,7 @@ namespace UPC.FitWisePlatform.API.Selling.Interfaces;
 
 [ApiController]
 [Route("api/v1/purchase-history")]
-public class PurchaseHistoryController(
+public class PurchaseHistoriesController(
     PurchaseHistoryCommandService commandService,
     PurchaseHistoryQueryService queryService)
     : ControllerBase

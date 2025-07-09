@@ -11,7 +11,7 @@ namespace UPC.FitWisePlatform.API.Reviewing.Interfaces;
 [ApiController]
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
-public class ReviewReportController(IReviewReportCommandService commandService, IReviewReportQueryService queryService) : ControllerBase
+public class ReviewReportsController(IReviewReportCommandService commandService, IReviewReportQueryService queryService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAll()

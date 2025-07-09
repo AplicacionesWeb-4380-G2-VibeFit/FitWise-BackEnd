@@ -7,7 +7,7 @@ namespace UPC.FitWisePlatform.API.Selling.Interfaces;
 
 [ApiController]
 [Route("api/v1/purchased-plans")]
-public class PurchasedPlanController(
+public class PurchasedPlansController(
     PurchasedPlanCommandService commandService,
     PurchasedPlanQueryService queryService)
     : ControllerBase
