@@ -12,4 +12,9 @@ public class MealQueryService(
     {
         return await mealRepository.FindByIdAsync(query.Id);
     }
+
+    public async Task<IEnumerable<Meal>> Handle(GetAllMealsQuery query)
+    {
+        return await mealRepository.ListAsync();
+    }
 }

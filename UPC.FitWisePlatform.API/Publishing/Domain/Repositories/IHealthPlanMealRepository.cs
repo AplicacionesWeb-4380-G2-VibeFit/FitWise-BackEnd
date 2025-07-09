@@ -7,5 +7,6 @@ namespace UPC.FitWisePlatform.API.Publishing.Domain.Repositories;
 public interface IHealthPlanMealRepository : IBaseRepository<HealthPlanMeal>
 {
     Task<IEnumerable<HealthPlanMeal>> FindByHealthPlanIdAsync(int healthPlanId);
+    Task<IEnumerable<HealthPlanMeal>> FindByHealthPlanIdAndDayOfWeekAsync(int healthPlanId, DayOfWeekType dayOfWeek);
     Task<bool> ExistsSameAssignmentOnDayOfWeekAsync(int healthPlanId, int mealId, DayOfWeekType dayOfWeek);
 }

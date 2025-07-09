@@ -2,7 +2,6 @@
 using UPC.FitWisePlatform.API.Publishing.Domain.Model.ValueObjects;
 
 namespace UPC.FitWisePlatform.API.Publishing.Domain.Model.Aggregate;
-
 public partial class HealthPlanMeal
 {
     public int Id { get; }
@@ -12,7 +11,7 @@ public partial class HealthPlanMeal
     public MealTime MealTime { get; private set; }  
     public string Notes { get; private set; }
     
-    public UPC.FitWisePlatform.API.Publishing.Domain.Model.Aggregate.HealthPlan HealthPlan { get; private set; }
+    public HealthPlan HealthPlan { get; private set; }
     public Meal Meal { get; private set; }
 
     public HealthPlanMeal() {}
