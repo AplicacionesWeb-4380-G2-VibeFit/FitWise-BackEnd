@@ -486,3 +486,9 @@ F:\RiderProjects\FitWise-BackEnd\UPC.FitWisePlatform.API\obj\Debug\net9.0\static
 F:\RiderProjects\FitWise-BackEnd\UPC.FitWisePlatform.API\obj\Debug\net9.0\UPC.FitW.CB3D7BE8.Up2Date
 F:\RiderProjects\FitWise-BackEnd\UPC.FitWisePlatform.API\obj\Debug\net9.0\UPC.FitWisePlatform.API.genruntimeconfig.cache
 F:\RiderProjects\FitWise-BackEnd\UPC.FitWisePlatform.API\obj\Debug\net9.0\ref\UPC.FitWisePlatform.API.dll
+F:\RiderProjects\FitWise-BackEnd\UPC.FitWisePlatform.API\bin\Debug\net9.0\BCrypt.Net-Next.dll
+F:\RiderProjects\FitWise-BackEnd\UPC.FitWisePlatform.API\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+F:\RiderProjects\FitWise-BackEnd\UPC.FitWisePlatform.API\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+F:\RiderProjects\FitWise-BackEnd\UPC.FitWisePlatform.API\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+F:\RiderProjects\FitWise-BackEnd\UPC.FitWisePlatform.API\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+F:\RiderProjects\FitWise-BackEnd\UPC.FitWisePlatform.API\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
