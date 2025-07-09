@@ -10,7 +10,7 @@ using UPC.FitWisePlatform.API.Publishing.Interfaces.REST.Transform;
 namespace UPC.FitWisePlatform.API.Publishing.Interfaces.REST;
 
 [ApiController]
-[Route("api/v1/health-plan/{healthPlanId:int}")]
+[Route("api/v1/health-plans/{healthPlanId:int}")]
 [Produces(MediaTypeNames.Application.Json)]
 [SwaggerTag("Operations for managing details within a specific health plan.")]
 public class HealthPlanDetails(IHealthPlanExerciseQueryService healthPlanExerciseQueryService,
