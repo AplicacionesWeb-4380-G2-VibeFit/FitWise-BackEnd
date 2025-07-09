@@ -109,7 +109,7 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "ACME.LearningCenter.Platform.API",
+        Title = "ACME.FitWise.Platform.API",
         Version = "v1",
         Description = "UPC FitWise Platform API",
         TermsOfService = new Uri("https://acme-learning.com/tos"),
